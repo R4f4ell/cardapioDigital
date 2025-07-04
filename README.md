@@ -1,0 +1,2 @@
+# cardapioDigital
+Cardápio digital moderno desenvolvido em React com React Router. Este projeto simula a experiência de um cliente em um restaurante, navegando entre páginas separadas para visualizar pratos, bebidas e sobremesas. A aplicação é responsiva, organizada por rotas e com foco em usabilidade e apresentação profissional. Ideal para uso em tablets ou dispositivos móveis em ambientes físicos de restaurantes.
