@@ -1,0 +1,112 @@
+@use '../../styles/variables';
+
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-color: variables.$white;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+  z-index: 1000;
+
+  .nav {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 1rem 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    .logo a {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: variables.$primary-color;
+      text-decoration: none;
+    }
+
+    .nav-links.desktop {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+
+      li a {
+        font-weight: 500;
+        color: variables.$black;
+
+        &:hover {
+          color: variables.$primary-color;
+        }
+      }
+    }
+
+    .menu-toggle {
+      display: none;
+      position: relative;
+      width: 40px;
+      height: 30px;
+      cursor: pointer;
+      z-index: 1100;
+
+      span {
+        position: absolute;
+        width: 100%;
+        height: 4px;
+        background: variables.$primary-color;
+        border-radius: 2px;
+        transition: 0.3s ease;
+        left: 0;
+      }
+      .top { top: 0; }
+      .middle { top: 50%; transform: translateY(-50%); }
+      .bottom { bottom: 0; }
+
+      &.open .top { transform: rotate(45deg) translate(5px, 5px); }
+      &.open .middle { opacity: 0; transform: translateX(-20px); }
+      &.open .bottom { transform: rotate(-45deg) translate(5px, -5px); }
+    }
+  }
+
+  .mobile-menu {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 80%;
+    max-width: 300px;
+    height: 100vh;
+    background-color: variables.$background-color;
+    box-shadow: -4px 0 10px rgba(0, 0, 0, 0.1);
+    padding: 2rem;
+    transform: translateX(100%);
+    transition: transform 0.3s ease;
+    z-index: 1000;
+
+    &.open {
+      transform: translateX(0);
+    }
+
+    ul {
+      display: flex;
+      flex-direction: column;
+      gap: 1.2rem;
+      text-align: left;
+
+      li a {
+        pointer-events: auto;
+        color: variables.$text-color;
+        font-size: 1.1rem;
+        font-weight: 500;
+
+        &:hover {
+          color: variables.$primary-color;
+        }
+      }
+    }
+  }
+
+  @media (max-width: 768px) {
+    .nav {
+      .nav-links.desktop { display: none; }
+      .menu-toggle { display: block; }
+    }
+  }
+}

@@ -1,2 +1,12 @@
-# cardapioDigital
-Cardápio digital moderno desenvolvido em React com React Router. Este projeto simula a experiência de um cliente em um restaurante, navegando entre páginas separadas para visualizar pratos, bebidas e sobremesas. A aplicação é responsiva, organizada por rotas e com foco em usabilidade e apresentação profissional. Ideal para uso em tablets ou dispositivos móveis em ambientes físicos de restaurantes.
+# React + Vite
+
+This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+
+Currently, two official plugins are available:
+
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
+- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+
+## Expanding the ESLint configuration
+
+If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
