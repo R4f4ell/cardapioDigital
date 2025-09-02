@@ -15,7 +15,7 @@
     z-index: -1;
   }
 
-  /* Logo fixa no topo direito */
+  /* Logo */
   &__header {
     position: absolute;
     top: 1rem;
@@ -23,7 +23,7 @@
     z-index: 2;
   }
 
-  /* Conteúdo central */
+  /* Conteúdo */
   &__content {
     position: absolute;
     top: 50%;
@@ -48,7 +48,7 @@
     text-shadow: 2px 2px 6px black;
   }
 
-  /* ===================== BOTÃO ANIMADO (CONTÍNUO) ===================== */
+  /* Botão Animado */
   &__button {
     position: relative;
     display: flex;
@@ -58,26 +58,19 @@
     height: 3rem;
     overflow: hidden;
     border-radius: 5rem;
-
-    /* “borda” animada via gradiente duplo (sem hover) */
     border: double 4px transparent;
     background-size: 300% 300%;
     background-image:
-      linear-gradient(#161a25, #161a25), /* miolo */
-      linear-gradient(137.48deg, #e63946 10%, #631e29 45%, #000000 67%, #161a25 87%); /* faixa que anima e dá brilho na borda */
+      linear-gradient(#161a25, #161a25),
+      linear-gradient(137.48deg, #e63946 10%, #631e29 45%, #000000 67%, #161a25 87%); 
     background-origin: border-box;
     background-clip: content-box, border-box;
-
-    /* animação contínua do gradiente (dá vida à borda e ao miolo) */
     animation: gradient_301 5s ease infinite;
-
-    /* sem hover/active (telas touch-first) */
     cursor: pointer;
   }
 
   &__button strong {
     z-index: 2;
-    /* sem importar fonte externa; usa a do projeto */
     font: inherit;
     font-weight: 700;
     font-size: 12px;
@@ -86,15 +79,14 @@
     text-shadow: 0 0 4px #ffffff;
   }
 
-  /* ===== Estrelas SEMPRE ativas (sem hover) ===== */
   &__container-stars {
     position: absolute;
     inset: 0;
-    z-index: 1; /* acima do fundo do botão */
+    z-index: 1; 
     overflow: hidden;
     border-radius: 5rem;
     backdrop-filter: blur(1rem);
-    background-color: #161a25; /* já visível, sem depender de hover */
+    background-color: #161a25; 
   }
 
   &__stars {
@@ -103,7 +95,6 @@
     width: 200rem;
     height: 200rem;
 
-    /* camada de estrelas que rotaciona lentamente */
     &::after {
       content: "";
       position: absolute;
@@ -116,7 +107,6 @@
       animation: animStarRotate 90s linear infinite;
     }
 
-    /* camada de estrelas que “desce” criando parallax sutil */
     &::before {
       content: "";
       position: absolute;
@@ -131,12 +121,11 @@
     }
   }
 
-  /* ===== Glow com círculos em órbita (contínuo) ===== */
   &__glow {
     position: absolute;
     display: flex;
     width: 12rem;
-    z-index: 2; /* acima das estrelas, abaixo do texto (z-index do strong é 2 também; DOM order mantém texto por cima) */
+    z-index: 2; 
 
     .circle {
       position: absolute;
@@ -147,7 +136,7 @@
     }
 
     .circle:nth-of-type(1) {
-      background: rgba(230, 57, 70, 0.62); /* vermelho do sistema */
+      background: rgba(230, 57, 70, 0.62); 
       animation: orbit 8s linear infinite;
     }
 
@@ -158,7 +147,7 @@
   }
 }
 
-/* ===================== ANIMAÇÕES ===================== */
+/* Animações */
 @keyframes gradient_301 {
   0%   { background-position:   0% 50%; }
   50%  { background-position: 100% 50%; }

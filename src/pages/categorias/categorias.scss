@@ -14,7 +14,7 @@
     top: 0;
     z-index: 2;
     display: flex;
-    align-items: center; /* centraliza verticalmente logo e ícone */
+    align-items: center; 
     justify-content: space-between;
     padding: 1rem;
   }
@@ -79,7 +79,6 @@
     }
   }
 
-  /* === Hambúrguer → X (exato do seu header.scss) === */
   .hamburger {
     cursor: pointer;
     width: 42px;
@@ -107,10 +106,8 @@
 
     .line-top-bottom { stroke-dasharray: 12 63; }
 
-    /* gira para formar o X */
     input:checked + svg { transform: rotate(-45deg); }
 
-    /* anima linhas sup/inf para cruzarem no centro */
     input:checked + svg .line-top-bottom {
       stroke-dasharray: 20 300;
       stroke-dashoffset: -32.42;

@@ -27,12 +27,12 @@ const Inicio = () => {
         >
           <strong>ENTRAR</strong>
 
-          {/* estrelas em loop, sempre ativas */}
+          {/* estrelas em loop */}
           <div className="inicio__container-stars">
             <div className="inicio__stars"></div>
           </div>
 
-          {/* glow com círculos em órbita, sempre ativos */}
+          {/* glow com círculos em órbita */}
           <div className="inicio__glow">
             <div className="circle"></div>
             <div className="circle"></div>

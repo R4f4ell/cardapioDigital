@@ -30,7 +30,6 @@ export default function Categorias() {
       const prevOverflow = document.body.style.overflow;
       document.body.style.overflow = "hidden";
 
-      // foca o primeiro link do menu
       const firstBtn =
         overlayRef.current &&
         overlayRef.current.querySelector("button.categorias__link");
@@ -46,7 +45,6 @@ export default function Categorias() {
         document.removeEventListener("keydown", onKeyDown);
       };
     } else {
-      // ao fechar, devolve o foco para o hambúrguer
       if (wasOpenRef.current && burgerLabelRef.current) {
         burgerLabelRef.current.focus();
       }
@@ -59,7 +57,6 @@ export default function Categorias() {
       <header className="categorias__header">
         <img src={logo} alt="Logo do sistema" className="logo categorias__logo" />
 
-        {/* Hambúrguer → X (idêntico ao seu código base) */}
         <label
           ref={burgerLabelRef}
           className="hamburger"
