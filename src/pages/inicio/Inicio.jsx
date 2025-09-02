@@ -1,19 +1,30 @@
+import { useNavigate } from "react-router-dom";
 import logo from "../../assets/images/inicio/logoCardapio-mobile.png";
 import "./inicio.scss";
 
 const Inicio = () => {
+  const navigate = useNavigate();
+
   return (
     <main className="inicio">
       <div className="inicio__background"></div>
 
       <header className="inicio__header">
-        <img src={logo} alt="Logo do sistema" className="inicio__logo" />
+        <img src={logo} alt="Logo do sistema" className="logo" />
       </header>
 
       <section className="inicio__content">
         <h1 className="inicio__title">Santana</h1>
 
-        <button type="button" className="inicio__button" aria-label="Entrar no sistema">
+        <button
+          type="button"
+          className="inicio__button"
+          aria-label="Entrar no sistema"
+          onClick={() => {
+            sessionStorage.setItem("allowCategorias", "1");
+            navigate("/categorias", { state: { viaButton: true } });
+          }}
+        >
           <strong>ENTRAR</strong>
 
           {/* estrelas em loop, sempre ativas */}

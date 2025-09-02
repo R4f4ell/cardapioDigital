@@ -1,0 +1,120 @@
+.categorias {
+  position: relative;
+  min-height: 100vh;
+  background: #0f1117;
+  color: #fff;
+
+  &__header {
+    position: sticky;
+    top: 0;
+    z-index: 2;
+    display: flex;
+    align-items: center; /* centraliza verticalmente logo e ícone */
+    justify-content: space-between;
+    padding: 1rem;
+
+    .logo { /* tamanho vem do _elements.scss */ }
+  }
+
+  &__content {
+    min-height: calc(100vh - 72px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+    text-align: center;
+  }
+
+  &__placeholder {
+    font-size: 1.75rem;
+    opacity: 0.92;
+    text-shadow: 0 0 6px rgba(0, 0, 0, 0.4);
+  }
+
+  &__overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.92);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    transform: scale(1.02);
+    transition: opacity 0.25s ease, transform 0.25s ease;
+
+    &.is-open {
+      opacity: 1;
+      pointer-events: auto;
+      transform: scale(1);
+    }
+  }
+
+  &__nav ul {
+    list-style: none;
+    margin: 0; padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    align-items: center;
+  }
+
+  &__link {
+    background: transparent;
+    border: none;
+    color: #fff;
+    font-size: 1.5rem;
+    letter-spacing: .5px;
+    padding: .5rem 1rem;
+    border-radius: .75rem;
+    cursor: pointer;
+    transition: transform .15s ease, opacity .15s ease;
+
+    &.is-active {
+      outline: 2px solid rgba(255,255,255,.25);
+    }
+  }
+
+  /* === Hambúrguer → X (exato do seu header.scss) === */
+  .hamburger {
+    cursor: pointer;
+    width: 42px;
+    height: 42px;
+
+    input { display: none; }
+
+    svg {
+      height: 42px;
+      width: 42px;
+      transition: transform 600ms cubic-bezier(0.4, 0, 0.2, 1);
+      display: block;
+    }
+
+    .line {
+      fill: none;
+      stroke: white;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      stroke-width: 3;
+      transition:
+        stroke-dasharray 600ms cubic-bezier(0.4, 0, 0.2, 1),
+        stroke-dashoffset 600ms cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .line-top-bottom { stroke-dasharray: 12 63; }
+
+    /* gira para formar o X */
+    input:checked + svg { transform: rotate(-45deg); }
+
+    /* anima linhas sup/inf para cruzarem no centro */
+    input:checked + svg .line-top-bottom {
+      stroke-dasharray: 20 300;
+      stroke-dashoffset: -32.42;
+    }
+  }
+
+  @media (min-width: 768px) {
+    &__link { font-size: 2rem; }
+  }
+}
