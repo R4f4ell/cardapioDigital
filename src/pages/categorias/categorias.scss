@@ -1,8 +1,13 @@
 .categorias {
   position: relative;
-  min-height: 100vh;
+  min-height: 100svh;
   background: #0f1117;
   color: #fff;
+  overflow: clip;
+
+  @supports (height: 100dvh){
+    min-height: 100dvh;
+  }
 
   &__header {
     position: sticky;
@@ -12,8 +17,6 @@
     align-items: center; /* centraliza verticalmente logo e ícone */
     justify-content: space-between;
     padding: 1rem;
-
-    .logo { /* tamanho vem do _elements.scss */ }
   }
 
   &__content {

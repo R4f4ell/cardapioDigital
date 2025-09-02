@@ -4,3 +4,21 @@
   height: auto;
   display: block;
 }
+
+html, body {
+  min-height: 100%;
+  overflow-x: hidden;
+  overscroll-behavior-y: none;
+}
+
+/* Remove highlight azul/cinza de toque no mobile */
+:where(a, button, input, textarea, select, summary, label, [role="button"], [tabindex]) {
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Bloqueia outline só em telas touch */
+@media (hover: none) and (pointer: coarse) {
+  :where(a, button, input, textarea, select, summary, label, [role="button"], [tabindex]):focus {
+    outline: none !important;
+  }
+}
