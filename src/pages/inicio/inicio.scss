@@ -7,8 +7,7 @@
   &__background {
     position: absolute;
     inset: 0;
-    background: url("../../assets/images/inicio/imgInicial-mobile.webp") no-repeat
-      center/cover;
+    background: url("../../assets/images/inicio/imgInicial-mobile.webp") no-repeat center/cover;
     z-index: -1;
   }
 
@@ -25,7 +24,7 @@
     }
   }
 
-  /* Conteúdo central absoluto */
+  /* Conteúdo central */
   &__content {
     position: absolute;
     top: 50%;
@@ -50,16 +49,134 @@
     text-shadow: 2px 2px 6px black;
   }
 
+  /* ===================== BOTÃO ANIMADO (CONTÍNUO) ===================== */
   &__button {
-    padding: 1rem 2.5rem;
-    font-size: 1.25rem;
-    font-weight: 600;
-    border: none;
-    border-radius: 50px;
-    background-color: #e63946;
-    color: #fff;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 13rem;
+    height: 3rem;
+    overflow: hidden;
+    border-radius: 5rem;
+
+    /* “borda” animada via gradiente duplo (sem hover) */
+    border: double 4px transparent;
+    background-size: 300% 300%;
+    background-image:
+      linear-gradient(#161a25, #161a25), /* miolo */
+      linear-gradient(137.48deg, #e63946 10%, #631e29 45%, #000000 67%, #161a25 87%); /* faixa que anima e dá brilho na borda */
+    background-origin: border-box;
+    background-clip: content-box, border-box;
+
+    /* animação contínua do gradiente (dá vida à borda e ao miolo) */
+    animation: gradient_301 5s ease infinite;
+
+    /* sem hover/active (telas touch-first) */
     cursor: pointer;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-    text-align: center;
   }
+
+  &__button strong {
+    z-index: 2;
+    /* sem importar fonte externa; usa a do projeto */
+    font: inherit;
+    font-weight: 700;
+    font-size: 12px;
+    letter-spacing: 5px;
+    color: #ffffff;
+    text-shadow: 0 0 4px #ffffff;
+  }
+
+  /* ===== Estrelas SEMPRE ativas (sem hover) ===== */
+  &__container-stars {
+    position: absolute;
+    inset: 0;
+    z-index: 1; /* acima do fundo do botão */
+    overflow: hidden;
+    border-radius: 5rem;
+    backdrop-filter: blur(1rem);
+    background-color: #161a25; /* já visível, sem depender de hover */
+  }
+
+  &__stars {
+    position: relative;
+    background: transparent;
+    width: 200rem;
+    height: 200rem;
+
+    /* camada de estrelas que rotaciona lentamente */
+    &::after {
+      content: "";
+      position: absolute;
+      top: -10rem;
+      left: -100rem;
+      width: 100%;
+      height: 100%;
+      background-image: radial-gradient(#ffffff 1px, transparent 1%);
+      background-size: 50px 50px;
+      animation: animStarRotate 90s linear infinite;
+    }
+
+    /* camada de estrelas que “desce” criando parallax sutil */
+    &::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: -50%;
+      width: 170%;
+      height: 500%;
+      background-image: radial-gradient(#ffffff 1px, transparent 1%);
+      background-size: 50px 50px;
+      opacity: 0.5;
+      animation: animStar 60s linear infinite;
+    }
+  }
+
+  /* ===== Glow com círculos em órbita (contínuo) ===== */
+  &__glow {
+    position: absolute;
+    display: flex;
+    width: 12rem;
+    z-index: 2; /* acima das estrelas, abaixo do texto (z-index do strong é 2 também; DOM order mantém texto por cima) */
+
+    .circle {
+      position: absolute;
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      filter: blur(2rem);
+    }
+
+    .circle:nth-of-type(1) {
+      background: rgba(230, 57, 70, 0.62); /* vermelho do sistema */
+      animation: orbit 8s linear infinite;
+    }
+
+    .circle:nth-of-type(2) {
+      background: rgba(99, 30, 41, 0.7);
+      animation: orbit 10s linear infinite;
+    }
+  }
+}
+
+/* ===================== ANIMAÇÕES ===================== */
+@keyframes gradient_301 {
+  0%   { background-position:   0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position:   0% 50%; }
+}
+
+@keyframes orbit {
+  from { transform: rotate(0deg)   translateX(100px) rotate(0deg); }
+  to   { transform: rotate(360deg) translateX(100px) rotate(-360deg); }
+}
+
+@keyframes animStar {
+  from { transform: translateY(0); }
+  to   { transform: translateY(-135rem); }
+}
+
+@keyframes animStarRotate {
+  from { transform: rotate(360deg); }
+  to   { transform: rotate(0); }
 }
