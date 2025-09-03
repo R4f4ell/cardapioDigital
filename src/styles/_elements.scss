@@ -22,3 +22,104 @@ html, body {
     outline: none !important;
   }
 }
+
+/* ===== Título global das seções ===== */
+.section-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  text-align: center;
+  color: #fff;
+}
+
+/* ===== Card global (com animação de borda) ===== */
+.card {
+  /* Gradiente e animação do “brilho” nas bordas */
+  --background: linear-gradient(to right, #e63946 0%, #631e29 100%);
+  background: var(--background);
+  background-size: 250% 250%;
+  animation: cardBorderShift 8s ease infinite;
+
+  /* Tamanho e shape */
+  width: 100%;
+  max-width: 300px;
+  padding: 1px; /* filete da borda animada */
+  border-radius: 0.7rem;
+  position: relative;
+  overflow: visible; /* deixa o glow externo aparecer */
+  z-index: 0;
+  display: flex;
+
+  /* Glow externo desfocado */
+  &::after {
+    content: "";
+    position: absolute;
+    inset: -1px; 
+    z-index: -1;
+    background: var(--background);
+    background-size: inherit;
+    filter: blur(36px);
+    opacity: 0.45;
+    border-radius: inherit;
+    animation: cardGlow 6s ease-in-out infinite;
+    transition: opacity 0.5s;
+  }
+
+  /* Bloco interno */
+  .card-info {
+    --color: #1f1a1d;
+    background: var(--color);
+    color: #fff;
+    width: 100%;
+    min-height: var(--card-min-h, 380px); /* ↑ aumentei a altura do card */
+    padding: 1rem;
+    border-radius: 0.7rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    text-align: center;
+  }
+
+  /* Imagem do card */
+  .card-img {
+    width: 100%;
+    height: var(--card-img-h, 200px); /* ↑ imagem mais alta */
+    border-radius: 0.5rem;
+    object-fit: cover;         /* preenche mantendo proporção (pode cortar bordas) */
+    object-position: center;   /* centraliza o corte se houver */
+    display: block;
+  }
+
+  .card-title {
+    font-size: 1rem;
+    font-weight: 600;
+  }
+
+  .card-desc {
+    font-size: 0.9rem;
+    color: #ccc;
+  }
+
+  .card-footer {
+    margin-top: auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+  }
+
+  .card-price {
+    font-weight: 700;
+    font-size: 1.05rem;
+    color: #e63946;
+  }
+
+  .card-preview {
+    background: none;
+    border: none;
+    color: #e63946;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: color 0.3s;
+  }
+}

@@ -1,5 +1,6 @@
 import { useState, useCallback, useEffect, useRef } from "react";
 import logo from "../../assets/images/inicio/logoCardapio-mobile.png";
+import Entradas from "../../components/entradas/Entradas";
 import "./categorias.scss";
 
 const CATEGORIES = [
@@ -10,6 +11,14 @@ const CATEGORIES = [
   { key: "combos", label: "Combos" },
   { key: "promocoes", label: "Promoções" },
 ];
+
+function TitleOnly({ title }) {
+  return (
+    <section className="categoria-vazia">
+      <h2 className="section-title">{title}</h2>
+    </section>
+  );
+}
 
 export default function Categorias() {
   const [active, setActive] = useState("entradas");
@@ -83,12 +92,12 @@ export default function Categorias() {
       </header>
 
       <section className="categorias__content">
-        {active === "entradas" && <p className="categorias__placeholder">Entradas</p>}
-        {active === "pratos" && <p className="categorias__placeholder">Pratos</p>}
-        {active === "sobremesas" && <p className="categorias__placeholder">Sobremesas</p>}
-        {active === "bebidas" && <p className="categorias__placeholder">Bebidas</p>}
-        {active === "combos" && <p className="categorias__placeholder">Combos</p>}
-        {active === "promocoes" && <p className="categorias__placeholder">Promoções</p>}
+        {active === "entradas" && <Entradas />}
+        {active === "pratos" && <TitleOnly title="Pratos" />}
+        {active === "sobremesas" && <TitleOnly title="Sobremesas" />}
+        {active === "bebidas" && <TitleOnly title="Bebidas" />}
+        {active === "combos" && <TitleOnly title="Combos" />}
+        {active === "promocoes" && <TitleOnly title="Promoções" />}
       </section>
 
       <div
