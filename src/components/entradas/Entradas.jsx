@@ -21,14 +21,21 @@ const Entradas = () => {
 
       <div className="entradas-grid">
         {entradas.map((item) => (
-          <div className="card" key={item.id}>
+          <div
+            key={item.id}
+            className="card categoria-card sr-card sr-only" /* SR + novo visual */
+          >
             <div className="card-info">
               <img src={item.img} alt={item.nome} className="card-img" />
               <h3 className="card-title">{item.nome}</h3>
               <p className="card-desc">{item.desc}</p>
               <div className="card-footer">
                 <span className="card-price">{item.preco}</span>
-                <button className="card-preview" aria-label={`Ver imagem ampliada de ${item.nome}`} onClick={() => setSelected(item)}>
+                <button
+                  className="card-preview"
+                  aria-label={`Ver imagem ampliada de ${item.nome}`}
+                  onClick={() => setSelected(item)}
+                >
                   <Search size={18} />
                 </button>
               </div>

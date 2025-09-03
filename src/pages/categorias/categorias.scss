@@ -118,3 +118,14 @@
     &__link { font-size: 2rem; }
   }
 }
+
+/* Evita flicker: só esconde enquanto a lib inicializa (html.sr é do ScrollReveal) */
+html.sr .sr-only { visibility: hidden; }
+
+/* Micro-otimização para animação */
+.categoria-card { will-change: transform, opacity; }
+
+/* Se o usuário preferir menos movimento, não force transições visuais */
+@media (prefers-reduced-motion: reduce) {
+  .categoria-card { transition: none !important; }
+}

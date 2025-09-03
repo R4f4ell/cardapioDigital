@@ -1,10 +1,12 @@
 .entradas {
+  --card-min-h: 460px;  
+  --card-img-h: 190px;  
   padding: 2rem 1rem;
 
   .entradas-grid {
     display: grid;
     grid-template-columns: 1fr;
-    gap: 1.5rem;
+    gap: 4rem;          
     justify-items: center;
 
     @media (min-width: 768px)  { grid-template-columns: repeat(2, 1fr); }

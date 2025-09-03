@@ -23,7 +23,7 @@ html, body {
   }
 }
 
-/* ===== Título global das seções ===== */
+/* ===== Título global das seções (mantém) ===== */
 .section-title {
   font-size: 1.5rem;
   font-weight: 600;
@@ -32,72 +32,102 @@ html, body {
   color: #fff;
 }
 
-/* ===== Card global (com animação de borda) ===== */
-.card {
-  /* Gradiente e animação do “brilho” nas bordas */
-  --background: linear-gradient(to right, #e63946 0%, #631e29 100%);
-  background: var(--background);
-  background-size: 250% 250%;
-  animation: cardBorderShift 8s ease infinite;
+/* ===== ScrollReveal: evita flicker (mantém aqui se ainda não tiver) ===== */
+html.sr .sr-only { visibility: hidden; }
 
-  /* Tamanho e shape */
+/* ===== Card global (NOVO visual: fundo dark + glows animados) ===== */
+.card {
+  /* Container */
+  position: relative;
+  overflow: hidden;            /* igual ao snippet (overflow-hidden) */
+  border-radius: 0.7rem;       /* ~ rounded-2xl */
   width: 100%;
   max-width: 300px;
-  padding: 1px; /* filete da borda animada */
-  border-radius: 0.7rem;
-  position: relative;
-  overflow: visible; /* deixa o glow externo aparecer */
-  z-index: 0;
   display: flex;
+  background: #0f1014;         /* dark base */
+  color: #f5f7fa;
 
-  /* Glow externo desfocado */
+  /* sombras sutis */
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.06),
+    0 6px 24px rgba(0,0,0,0.25);
+
+  /* animação no hover (skew) */
+  transition: transform 500ms cubic-bezier(0.2, 0, 0, 1);
+  will-change: transform;
+
+  &:hover {
+    transform: skewX(6deg) skewY(-6deg);
+  }
+
+  /* Glows (círculos blur) por trás do conteúdo */
+  &::before,
   &::after {
     content: "";
     position: absolute;
-    inset: -1px; 
-    z-index: -1;
-    background: var(--background);
-    background-size: inherit;
-    filter: blur(36px);
-    opacity: 0.45;
-    border-radius: inherit;
-    animation: cardGlow 6s ease-in-out infinite;
-    transition: opacity 0.5s;
+    border-radius: 9999px;
+    filter: blur(22px);
+    z-index: 0; /* conteúdo fica acima */
+    transition: transform 500ms cubic-bezier(0.2, 0, 0, 1);
+    will-change: transform;
   }
 
-  /* Bloco interno */
+  /* Glow azul (sky-400) */
+  &::before {
+    width: 48px; height: 48px;  /* menor que o snippet p/ caber melhor */
+    right: 14px; top: 18%;
+    background: #38bdf8;
+    transform: translate(0, 0);
+  }
+
+  /* Glow laranja (orange-400) */
+  &::after {
+    width: 44px; height: 44px;
+    right: 56px; bottom: 34%;
+    background: #fb923c;
+    transform: translate(0, 0);
+  }
+
+  &:hover::before { transform: translate(11px, -11px); }
+  &:hover::after  { transform: translate(11px,  16px); }
+
+  /* ===== Bloco interno ===== */
   .card-info {
-    --color: #1f1a1d;
-    background: var(--color);
+    /* Antes: tinha --color e fundo sólido; agora deixamos TRANSPARENTE
+       para os glows aparecerem por trás, como no snippet. */
+    background: transparent;
     color: #fff;
     width: 100%;
-    min-height: var(--card-min-h, 380px); /* ↑ aumentei a altura do card */
+    min-height: var(--card-min-h, 240px); /* ↓ padrão menor (era 380px) */
     padding: 1rem;
     border-radius: 0.7rem;
     display: flex;
     flex-direction: column;
     gap: 0.6rem;
     text-align: center;
+    position: relative;
+    z-index: 1; /* acima dos glows */
   }
 
-  /* Imagem do card */
+  /* ===== Imagem do card ===== */
   .card-img {
     width: 100%;
-    height: var(--card-img-h, 200px); /* ↑ imagem mais alta */
+    height: var(--card-img-h, 120px); 
     border-radius: 0.5rem;
-    object-fit: cover;         /* preenche mantendo proporção (pode cortar bordas) */
-    object-position: center;   /* centraliza o corte se houver */
+    object-fit: cover;  
+    object-position: center;
     display: block;
   }
 
   .card-title {
     font-size: 1rem;
     font-weight: 600;
+    margin-top: 30px;
   }
 
   .card-desc {
     font-size: 0.9rem;
-    color: #ccc;
+    color: #d1d5db; 
   }
 
   .card-footer {
@@ -106,20 +136,39 @@ html, body {
     align-items: center;
     justify-content: space-between;
     width: 100%;
+    gap: 0.5rem;
   }
 
   .card-price {
     font-weight: 700;
     font-size: 1.05rem;
-    color: #e63946;
+    color: #e63946; /* mantém seu destaque de preço */
   }
 
   .card-preview {
-    background: none;
-    border: none;
-    color: #e63946;
-    font-size: 1.2rem;
-    cursor: pointer;
-    transition: color 0.3s;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.08);
+    color: #f5f7fa;
+    width: 36px; height: 36px;
+    border-radius: 10px;
+    display: inline-flex; align-items: center; justify-content: center;
+    transition: transform 200ms ease, background 200ms ease, border-color 200ms ease;
+
+    &:hover {
+      transform: translateY(-2px);
+      background: rgba(255,255,255,0.12);
+      border-color: rgba(255,255,255,0.18);
+    }
+    &:active { transform: translateY(0); }
+  }
+}
+
+/* Acessibilidade: respeita quem prefere menos movimento */
+@media (prefers-reduced-motion: reduce) {
+  .card,
+  .card::before,
+  .card::after {
+    transition: none !important;
+    transform: none !important;
   }
 }
