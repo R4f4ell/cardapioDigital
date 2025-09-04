@@ -1,6 +1,13 @@
 import { useState, useCallback, useEffect, useRef } from "react";
 import logo from "../../assets/images/inicio/logoCardapio-mobile.png";
 import Entradas from "../../components/entradas/Entradas";
+import Pratos from "../../components/pratos/Pratos";
+import Sobremesas from "../../components/sobremesas/Sobremesas";
+// quando criar os outros, importe também:
+// import Bebidas from "../../components/categorias/Bebidas";
+// import Combos from "../../components/categorias/Combos";
+// import Promocoes from "../../components/categorias/Promocoes";
+
 import "./categorias.scss";
 
 const CATEGORIES = [
@@ -11,14 +18,6 @@ const CATEGORIES = [
   { key: "combos", label: "Combos" },
   { key: "promocoes", label: "Promoções" },
 ];
-
-function TitleOnly({ title }) {
-  return (
-    <section className="categoria-vazia">
-      <h2 className="section-title">{title}</h2>
-    </section>
-  );
-}
 
 export default function Categorias() {
   const [active, setActive] = useState("entradas");
@@ -92,11 +91,12 @@ export default function Categorias() {
 
       <section className="categorias__content">
         {active === "entradas" && <Entradas />}
-        {active === "pratos" && <TitleOnly title="Pratos" />}
-        {active === "sobremesas" && <TitleOnly title="Sobremesas" />}
-        {active === "bebidas" && <TitleOnly title="Bebidas" />}
-        {active === "combos" && <TitleOnly title="Combos" />}
-        {active === "promocoes" && <TitleOnly title="Promoções" />}
+        {active === "pratos" && <Pratos />}
+        {active === "sobremesas" && <Sobremesas />}
+        {/* Ative quando criar os outros */}
+        {/* {active === "bebidas" && <Bebidas />} */}
+        {/* {active === "combos" && <Combos />} */}
+        {/* {active === "promocoes" && <Promocoes />} */}
       </section>
 
       <div

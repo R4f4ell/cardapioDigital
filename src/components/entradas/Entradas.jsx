@@ -1,77 +1,41 @@
-import { useEffect, useState } from "react";
-import "./entradas.scss";
-import { Eye, X } from "lucide-react";
-import useScrollRevealCategorias from "../../hooks/categorias/useScrollRevealCategorias";
+import CardapioGrid from "../CardapioGrid";
 
-import entrada1 from "../../assets/images/entradas/teste1.png";
-import entrada2 from "../../assets/images/entradas/teste2.png";
-import entrada3 from "../../assets/images/entradas/teste3.png";
+import paoDeAlhoMobile from "../../assets/images/entradas/paoDeAlho-mobile.webp";
+import bolinhoBacalhauMobile from "../../assets/images/entradas/bolinhoBacalhau-mobile.webp";
+import calabresaAceboladaMobile from "../../assets/images/entradas/calabresaAceboladaNaChapa-mobile.webp";
+import coxinhaFrangoCatupiryMobile from "../../assets/images/entradas/coxinhaFrangoComCatupiry-mobile.webp";
 
 export default function Entradas() {
-  const [selected, setSelected] = useState(null);
-  useScrollRevealCategorias(".categoria-card.sr-card");
-
-  const entradas = [
-    { id: 1, img: entrada1, nome: "Bruschetta", desc: "Pão italiano, tomate, azeite e manjericão", preco: "R$ 18,90" },
-    { id: 2, img: entrada2, nome: "Tábua de frios", desc: "Queijos selecionados, salames e azeitonas", preco: "R$ 34,90" },
-    { id: 3, img: entrada3, nome: "Bolinho de bacalhau", desc: "Crocante por fora e macio por dentro", preco: "R$ 27,90" },
+  const items = [
+    {
+      id: 1,
+      img: paoDeAlhoMobile,
+      nome: "Pão de Alho",
+      desc: "Clássico do churrasco, crocante e saboroso",
+      preco: "R$ 12,90",
+    },
+    {
+      id: 2,
+      img: bolinhoBacalhauMobile,
+      nome: "Bolinho de Bacalhau",
+      desc: "Crocante por fora e macio por dentro",
+      preco: "R$ 27,90",
+    },
+    {
+      id: 3,
+      img: calabresaAceboladaMobile,
+      nome: "Calabresa acebolada na chapa",
+      desc: "Linguiça calabresa fatiada com cebola dourada",
+      preco: "R$ 24,90",
+    },
+    {
+      id: 4,
+      img: coxinhaFrangoCatupiryMobile,
+      nome: "Coxinha de frango com catupiry",
+      desc: "Tradicional, recheada com frango e catupiry cremoso",
+      preco: "R$ 8,90",
+    },
   ];
 
-  useEffect(() => {
-    const onEsc = (e) => { if (e.key === "Escape") setSelected(null); };
-    document.addEventListener("keydown", onEsc);
-    return () => document.removeEventListener("keydown", onEsc);
-  }, []);
-
-  return (
-    <section className="entradas">
-      <h2 className="section-title">Entradas</h2>
-
-      <div className="entradas-grid cards-grid">
-        {entradas.map((item) => (
-          <div key={item.id} className="card categoria-card sr-card">
-            <div className="card-info">
-              <div className="card-media">
-                <img
-                  src={item.img}
-                  alt={item.nome}
-                  className="card-img"
-                  loading="lazy"
-                  decoding="async"
-                  onLoad={(e) => e.currentTarget.classList.add("is-loaded")}
-                />
-              </div>
-
-              <h3 className="card-title u-clamp-1">{item.nome}</h3>
-              <p className="card-desc u-clamp-2">{item.desc}</p>
-
-              <div className="card-footer">
-                <span className="card-price">{item.preco}</span>
-                <button
-                  className="card-preview card-preview--fluid"
-                  aria-label={`Ver imagem ampliada de ${item.nome}`}
-                  onClick={() => setSelected(item)}
-                >
-                  <Eye size={18} className="btn-icon" />
-                  <span className="btn-text">Ver maior</span>
-                </button>
-              </div>
-            </div>
-          </div>
-        ))}
-      </div>
-
-      {selected && (
-        <div className="modal" role="dialog" aria-modal="true" onClick={() => setSelected(null)}>
-          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-            <button className="modal-close" aria-label="Fechar" onClick={() => setSelected(null)}>
-              <X size={22} />
-            </button>
-            <img src={selected.img} alt={selected.nome} className="modal-img" />
-            <h3 className="modal-title">{selected.nome}</h3>
-          </div>
-        </div>
-      )}
-    </section>
-  );
+  return <CardapioGrid title="Entradas" items={items} />;
 }
