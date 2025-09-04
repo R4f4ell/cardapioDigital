@@ -1,6 +1,7 @@
 import { useState } from "react";
 import "./entradas.scss";
 import { Search, X } from "lucide-react";
+import useScrollRevealCategorias from "../../hooks/categorias/useScrollRevealCategorias";
 
 import entrada1 from "../../assets/images/entradas/teste1.png";
 import entrada2 from "../../assets/images/entradas/teste2.png";
@@ -8,6 +9,7 @@ import entrada3 from "../../assets/images/entradas/teste3.png";
 
 const Entradas = () => {
   const [selected, setSelected] = useState(null);
+  useScrollRevealCategorias(".categoria-card.sr-card");
 
   const entradas = [
     { id: 1, img: entrada1, nome: "Bruschetta", desc: "Pão italiano, tomate, azeite e manjericão", preco: "R$ 18,90" },
@@ -23,7 +25,7 @@ const Entradas = () => {
         {entradas.map((item) => (
           <div
             key={item.id}
-            className="card categoria-card sr-card sr-only" /* SR + novo visual */
+            className="card categoria-card sr-card"
           >
             <div className="card-info">
               <img src={item.img} alt={item.nome} className="card-img" />

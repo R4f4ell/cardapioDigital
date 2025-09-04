@@ -3,9 +3,6 @@ import logo from "../../assets/images/inicio/logoCardapio-mobile.png";
 import Entradas from "../../components/entradas/Entradas";
 import "./categorias.scss";
 
-/* ADIÇÃO: hook do ScrollReveal (lado a lado deste arquivo) */
-import useScrollRevealCategorias from "../../hooks/categorias/useScrollReveal";
-
 const CATEGORIES = [
   { key: "entradas", label: "Entradas" },
   { key: "pratos", label: "Pratos" },
@@ -27,10 +24,6 @@ export default function Categorias() {
   const [active, setActive] = useState("entradas");
   const [menuOpen, setMenuOpen] = useState(false);
 
-  /* ADIÇÃO: inicializa o ScrollReveal para os cards de categorias
-     e faz sync toda vez que a aba ativa muda (active) */
-  useScrollRevealCategorias(".categoria-card.sr-card", active);
-
   const overlayRef = useRef(null);
   const burgerLabelRef = useRef(null);
   const wasOpenRef = useRef(false);
@@ -40,7 +33,6 @@ export default function Categorias() {
     setMenuOpen(false);
   }, []);
 
-  // Bloqueio de scroll + foco + ESC
   useEffect(() => {
     if (menuOpen) {
       const prevOverflow = document.body.style.overflow;
