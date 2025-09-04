@@ -1,13 +1,13 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./entradas.scss";
-import { Search, X } from "lucide-react";
+import { Eye, X } from "lucide-react";
 import useScrollRevealCategorias from "../../hooks/categorias/useScrollRevealCategorias";
 
 import entrada1 from "../../assets/images/entradas/teste1.png";
 import entrada2 from "../../assets/images/entradas/teste2.png";
 import entrada3 from "../../assets/images/entradas/teste3.png";
 
-const Entradas = () => {
+export default function Entradas() {
   const [selected, setSelected] = useState(null);
   useScrollRevealCategorias(".categoria-card.sr-card");
 
@@ -17,28 +17,43 @@ const Entradas = () => {
     { id: 3, img: entrada3, nome: "Bolinho de bacalhau", desc: "Crocante por fora e macio por dentro", preco: "R$ 27,90" },
   ];
 
+  useEffect(() => {
+    const onEsc = (e) => { if (e.key === "Escape") setSelected(null); };
+    document.addEventListener("keydown", onEsc);
+    return () => document.removeEventListener("keydown", onEsc);
+  }, []);
+
   return (
     <section className="entradas">
       <h2 className="section-title">Entradas</h2>
 
-      <div className="entradas-grid">
+      <div className="entradas-grid cards-grid">
         {entradas.map((item) => (
-          <div
-            key={item.id}
-            className="card categoria-card sr-card"
-          >
+          <div key={item.id} className="card categoria-card sr-card">
             <div className="card-info">
-              <img src={item.img} alt={item.nome} className="card-img" />
-              <h3 className="card-title">{item.nome}</h3>
-              <p className="card-desc">{item.desc}</p>
+              <div className="card-media">
+                <img
+                  src={item.img}
+                  alt={item.nome}
+                  className="card-img"
+                  loading="lazy"
+                  decoding="async"
+                  onLoad={(e) => e.currentTarget.classList.add("is-loaded")}
+                />
+              </div>
+
+              <h3 className="card-title u-clamp-1">{item.nome}</h3>
+              <p className="card-desc u-clamp-2">{item.desc}</p>
+
               <div className="card-footer">
                 <span className="card-price">{item.preco}</span>
                 <button
-                  className="card-preview"
+                  className="card-preview card-preview--fluid"
                   aria-label={`Ver imagem ampliada de ${item.nome}`}
                   onClick={() => setSelected(item)}
                 >
-                  <Search size={18} />
+                  <Eye size={18} className="btn-icon" />
+                  <span className="btn-text">Ver maior</span>
                 </button>
               </div>
             </div>
@@ -47,7 +62,7 @@ const Entradas = () => {
       </div>
 
       {selected && (
-        <div className="modal" onClick={() => setSelected(null)}>
+        <div className="modal" role="dialog" aria-modal="true" onClick={() => setSelected(null)}>
           <div className="modal-content" onClick={(e) => e.stopPropagation()}>
             <button className="modal-close" aria-label="Fechar" onClick={() => setSelected(null)}>
               <X size={22} />
@@ -59,6 +74,4 @@ const Entradas = () => {
       )}
     </section>
   );
-};
-
-export default Entradas;
+}

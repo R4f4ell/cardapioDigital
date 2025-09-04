@@ -25,9 +25,9 @@ html, body {
 
 /* ===== Título global das seções (mantém) ===== */
 .section-title {
-  font-size: 1.5rem;
+  font-size: 2rem;
   font-weight: 600;
-  margin-bottom: 1.5rem;
+  margin-bottom: 2.5rem;
   text-align: center;
   color: #fff;
 }
@@ -37,22 +37,19 @@ html.sr .sr-only { visibility: hidden; }
 
 /* ===== Card global (NOVO visual: fundo dark + glows animados) ===== */
 .card {
-  /* Container */
   position: relative;
-  overflow: hidden;            /* igual ao snippet (overflow-hidden) */
-  border-radius: 0.7rem;       /* ~ rounded-2xl */
+  overflow: hidden;
+  border-radius: 0.7rem;
   width: 100%;
   max-width: 300px;
   display: flex;
-  background: #0f1014;         /* dark base */
+  background: #0f1014;
   color: #f5f7fa;
 
-  /* sombras sutis */
   box-shadow:
     inset 0 1px 0 rgba(255,255,255,0.06),
     0 6px 24px rgba(0,0,0,0.25);
 
-  /* animação no hover (skew) */
   transition: transform 500ms cubic-bezier(0.2, 0, 0, 1);
   will-change: transform;
 
@@ -60,21 +57,20 @@ html.sr .sr-only { visibility: hidden; }
     transform: skewX(6deg) skewY(-6deg);
   }
 
-  /* Glows (círculos blur) por trás do conteúdo */
   &::before,
   &::after {
     content: "";
     position: absolute;
     border-radius: 9999px;
     filter: blur(22px);
-    z-index: 0; /* conteúdo fica acima */
+    z-index: 0;
     transition: transform 500ms cubic-bezier(0.2, 0, 0, 1);
     will-change: transform;
   }
 
   /* Glow azul (sky-400) */
   &::before {
-    width: 48px; height: 48px;  /* menor que o snippet p/ caber melhor */
+    width: 48px; height: 48px;
     right: 14px; top: 18%;
     background: #38bdf8;
     transform: translate(0, 0);
@@ -93,12 +89,10 @@ html.sr .sr-only { visibility: hidden; }
 
   /* ===== Bloco interno ===== */
   .card-info {
-    /* Antes: tinha --color e fundo sólido; agora deixamos TRANSPARENTE
-       para os glows aparecerem por trás, como no snippet. */
     background: transparent;
     color: #fff;
     width: 100%;
-    min-height: var(--card-min-h, 240px); /* ↓ padrão menor (era 380px) */
+    min-height: var(--card-min-h, 240px);
     padding: 1rem;
     border-radius: 0.7rem;
     display: flex;
@@ -106,15 +100,15 @@ html.sr .sr-only { visibility: hidden; }
     gap: 0.6rem;
     text-align: center;
     position: relative;
-    z-index: 1; /* acima dos glows */
+    z-index: 1;
   }
 
-  /* ===== Imagem do card ===== */
+  /* ===== Imagem do card (padrão) ===== */
   .card-img {
     width: 100%;
-    height: var(--card-img-h, 120px); 
+    height: var(--card-img-h, 120px);
     border-radius: 0.5rem;
-    object-fit: cover;  
+    object-fit: cover;
     object-position: center;
     display: block;
   }
@@ -127,7 +121,7 @@ html.sr .sr-only { visibility: hidden; }
 
   .card-desc {
     font-size: 0.9rem;
-    color: #d1d5db; 
+    color: #d1d5db;
   }
 
   .card-footer {
@@ -142,7 +136,7 @@ html.sr .sr-only { visibility: hidden; }
   .card-price {
     font-weight: 700;
     font-size: 1.05rem;
-    color: #e63946; /* mantém seu destaque de preço */
+    color: #e63946;
   }
 
   .card-preview {
@@ -171,4 +165,89 @@ html.sr .sr-only { visibility: hidden; }
     transition: none !important;
     transform: none !important;
   }
+}
+
+/* ===================== */
+/* === UTILIDADES GLOBAIS PARA REUSO EM OUTRAS PÁGINAS === */
+/* ===================== */
+
+/* Grid de cards reutilizável */
+.cards-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+  justify-items: center;
+
+  @media (min-width: 768px) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 2.5rem;
+  }
+  @media (min-width: 1024px) {
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 3rem;
+  }
+}
+
+/* Contêiner de mídia com proporção fixa (para não cortar/“pular”) */
+.card-media {
+  position: relative;
+  width: 100%;
+  aspect-ratio: var(--card-img-ratio, 4/3);
+  overflow: hidden;
+  border-radius: 0.5rem;
+}
+
+/* Quando a imagem estiver dentro de .card-media, ocupe tudo e faça fade-in */
+.card-media .card-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+
+  opacity: 0;
+  transition: opacity .25s ease;
+}
+.card-media .card-img.is-loaded { opacity: 1; }
+
+/* Botão de preview “fluido” reutilizável (icon-only no mobile, texto no ≥768px) */
+.card-preview--fluid {
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border-radius: 10px;
+  display: inline-flex; align-items: center; justify-content: center;
+  gap: .5rem;
+
+  &:focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: 2px;
+  }
+
+  .btn-icon { display: inline-flex; }
+  .btn-text { display: none; }
+
+  @media (min-width: 768px) {
+    width: auto;
+    height: 44px;
+    padding: 0 .875rem;
+
+    .btn-icon { display: none; }
+    .btn-text { display: inline; }
+  }
+}
+
+/* Utilitário simples de clamp (quando quiser reaproveitar) */
+.u-clamp-1 {
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.u-clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
