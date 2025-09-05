@@ -1,12 +1,13 @@
 import { useState, useCallback, useEffect, useRef } from "react";
 import logo from "../../assets/images/inicio/logoCardapio-mobile.png";
+
+// Imports das categorias
 import Entradas from "../../components/entradas/Entradas";
 import Pratos from "../../components/pratos/Pratos";
 import Sobremesas from "../../components/sobremesas/Sobremesas";
-// quando criar os outros, importe também:
-// import Bebidas from "../../components/categorias/Bebidas";
-// import Combos from "../../components/categorias/Combos";
-// import Promocoes from "../../components/categorias/Promocoes";
+import Bebidas from "../../components/bebidas/Bebidas";
+import Combos from "../../components/combos/Combos";
+import Promocoes from "../../components/promocoes/Promocoes";
 
 import "./categorias.scss";
 
@@ -93,10 +94,9 @@ export default function Categorias() {
         {active === "entradas" && <Entradas />}
         {active === "pratos" && <Pratos />}
         {active === "sobremesas" && <Sobremesas />}
-        {/* Ative quando criar os outros */}
-        {/* {active === "bebidas" && <Bebidas />} */}
-        {/* {active === "combos" && <Combos />} */}
-        {/* {active === "promocoes" && <Promocoes />} */}
+        {active === "bebidas" && <Bebidas />}
+        {active === "combos" && <Combos />}
+        {active === "promocoes" && <Promocoes />}
       </section>
 
       <div
