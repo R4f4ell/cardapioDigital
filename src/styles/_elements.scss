@@ -1,3 +1,5 @@
+@use './variables' as v;
+
 /* Logo padrão do sistema */
 .logo {
   width: 70px;
@@ -23,14 +25,22 @@ html, body {
   }
 }
 
-/* ===== Título global das seções (mantém) ===== */
+
 .section-title {
-  font-size: 2rem;
-  font-weight: 600;
+  font-size: 2.2rem;
+  font-weight: 700;
   margin-bottom: 2.5rem;
   text-align: center;
-  color: #fff;
+
+  background: v.$global-gradient;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+
+  text-shadow: 0 0 8px rgba(255, 215, 0, 0.5),
+               0 0 12px rgba(34, 139, 34, 0.4);
 }
+
 
 /* ===== ScrollReveal: evita flicker (mantém aqui se ainda não tiver) ===== */
 html.sr .sr-only { visibility: hidden; }
@@ -136,7 +146,10 @@ html.sr .sr-only { visibility: hidden; }
   .card-price {
     font-weight: 700;
     font-size: 1.05rem;
-    color: #e63946;
+    background: v.$global-gradient;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
   }
 
   .card-preview {

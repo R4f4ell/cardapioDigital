@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import logo from "../../assets/images/inicio/logoCardapio-mobile.png";
+import logo from "../../assets/images/inicio/logoFavicon.png";
 import "./inicio.scss";
 
 const Inicio = () => {

@@ -1,5 +1,5 @@
 import { useState, useCallback, useEffect, useRef } from "react";
-import logo from "../../assets/images/inicio/logoCardapio-mobile.png";
+import logo from "../../assets/images/inicio/logoFavicon.png";
 
 // Imports das categorias
 import Entradas from "../../components/entradas/Entradas";
@@ -27,17 +27,38 @@ export default function Categorias() {
   const overlayRef = useRef(null);
   const burgerLabelRef = useRef(null);
   const wasOpenRef = useRef(false);
+  const scrollYRef = useRef(0);
 
   const selectCategory = useCallback((key) => {
     setActive(key);
     setMenuOpen(false);
+    window.scrollTo({ top: 0, behavior: "smooth" });
   }, []);
 
   useEffect(() => {
     if (menuOpen) {
-      const prevOverflow = document.body.style.overflow;
-      document.body.style.overflow = "hidden";
+      // ===== Bloqueio de scroll robusto (inclusive iOS Safari) =====
+      const html = document.documentElement;
+      const body = document.body;
 
+      const prev = {
+        htmlOverflow: html.style.overflow,
+        bodyOverflow: body.style.overflow,
+        bodyPosition: body.style.position,
+        bodyTop: body.style.top,
+        bodyWidth: body.style.width,
+        bodyTouchAction: body.style.touchAction,
+      };
+
+      scrollYRef.current = window.scrollY;
+      html.style.overflow = "hidden";
+      body.style.overflow = "hidden";
+      body.style.position = "fixed";
+      body.style.top = `-${scrollYRef.current}px`;
+      body.style.width = "100%";
+      body.style.touchAction = "none";
+
+      // Acessibilidade: foca o primeiro link
       const firstBtn =
         overlayRef.current &&
         overlayRef.current.querySelector("button.categorias__link");
@@ -49,8 +70,17 @@ export default function Categorias() {
       document.addEventListener("keydown", onKeyDown);
 
       return () => {
-        document.body.style.overflow = prevOverflow;
         document.removeEventListener("keydown", onKeyDown);
+
+        html.style.overflow = prev.htmlOverflow;
+        body.style.overflow = prev.bodyOverflow;
+        body.style.position = prev.bodyPosition;
+        body.style.top = prev.bodyTop;
+        body.style.width = prev.bodyWidth;
+        body.style.touchAction = prev.bodyTouchAction;
+
+        // retorna para a posição anterior
+        window.scrollTo(0, scrollYRef.current);
       };
     } else {
       if (wasOpenRef.current && burgerLabelRef.current) {
@@ -105,7 +135,7 @@ export default function Categorias() {
         className={`categorias__overlay ${menuOpen ? "is-open" : ""}`}
         role="dialog"
         aria-modal="true"
-        aria-hidden={!menuOpen}
+        aria-hidden={menuOpen ? "false" : "true"}
       >
         <nav className="categorias__nav" aria-label="Categorias do cardápio">
           <ul>
