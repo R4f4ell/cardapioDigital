@@ -1,11 +1,11 @@
 import CardapioGrid from "../CardapioGrid";
 
 // Imports das imagens
-import feijoadaCompletaMobile from "../../assets/images/pratos/feijoadaCompleta-mobile.webp";
-import moquecaPeixeMobile from "../../assets/images/pratos/moquecaPeixe-mobile.webp";
-import churrascoMistoMobile from "../../assets/images/pratos/churrascoMisto-mobile.webp";
-import pratoFeitoMobile from "../../assets/images/pratos/pratoFeito-mobile.webp";
-import peixeFritoPiraoMobile from "../../assets/images/pratos/peixeFritoPirao-mobile.webp";
+import feijoadaCompletaMobile from "../../assets/images/pratos/cards/feijoadaCompleta-mobile.webp";
+import moquecaPeixeMobile from "../../assets/images/pratos/cards/moquecaPeixe-mobile.webp";
+import churrascoMistoMobile from "../../assets/images/pratos/cards/churrascoMisto-mobile.webp";
+import pratoFeitoMobile from "../../assets/images/pratos/cards/pratoFeito-mobile.webp";
+import peixeFritoPiraoMobile from "../../assets/images/pratos/cards/peixeFritoPirao-mobile.webp";
 
 export default function Pratos() {
   const items = [

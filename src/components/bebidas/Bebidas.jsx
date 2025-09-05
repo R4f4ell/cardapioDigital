@@ -1,10 +1,10 @@
 import CardapioGrid from "../CardapioGrid";
 
 // Imports das imagens
-import aguaDeCocoMobile from "../../assets/images/bebidas/aguaDeCoco-mobile.webp";
-import cervejasMobile from "../../assets/images/bebidas/cervejas-mobile.webp";
-import refrigerantesMobile from "../../assets/images/bebidas/refrigerantes-mobile.webp";
-import sucosMobile from "../../assets/images/bebidas/sucos-mobile.webp";
+import aguaDeCocoMobile from "../../assets/images/bebidas/cards/aguaDeCoco-mobile.webp";
+import cervejasMobile from "../../assets/images/bebidas/cards/cervejas-mobile.webp";
+import refrigerantesMobile from "../../assets/images/bebidas/cards/refrigerantes-mobile.webp";
+import sucosMobile from "../../assets/images/bebidas/cards/sucos-mobile.webp";
 
 export default function Bebidas() {
   const items = [

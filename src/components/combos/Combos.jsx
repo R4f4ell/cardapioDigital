@@ -1,9 +1,9 @@
 import CardapioGrid from "../CardapioGrid";
 
 // Imports das imagens
-import hamburguerBatataRefriMobile from "../../assets/images/combos/hamburguerBatataRefri-mobile.webp";
-import pizzaSucoMobile from "../../assets/images/combos/pizzaSuco-mobile.webp";
-import pratoFeitoSucoMobile from "../../assets/images/combos/pratoFeito-e-suco-mobile.webp";
+import hamburguerBatataRefriMobile from "../../assets/images/combos/cards/hamburguerBatataRefri-mobile.webp";
+import pizzaSucoMobile from "../../assets/images/combos/cards/pizzaSuco-mobile.webp";
+import pratoFeitoSucoMobile from "../../assets/images/combos/cards/pratoFeito-e-suco-mobile.webp";
 
 export default function Combos() {
   const items = [

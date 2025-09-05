@@ -1,11 +1,11 @@
 import CardapioGrid from "../CardapioGrid";
 
 // Imports das imagens
-import pudimMobile from "../../assets/images/sobremesas/pudim-mobile.webp";
-import brigadeiroGourmetMobile from "../../assets/images/sobremesas/brigadeiroGourmet-mobile.webp";
-import acaiTigelaMobile from "../../assets/images/sobremesas/acaiTigela-mobile.webp";
-import cocadaMobile from "../../assets/images/sobremesas/cocada-mobile.webp";
-import mousseMaracujaMobile from "../../assets/images/sobremesas/mousseMaracuja-mobile.webp";
+import pudimMobile from "../../assets/images/sobremesas/cards/pudim-mobile.webp";
+import brigadeiroGourmetMobile from "../../assets/images/sobremesas/cards/brigadeiroGourmet-mobile.webp";
+import acaiTigelaMobile from "../../assets/images/sobremesas/cards/acaiTigela-mobile.webp";
+import cocadaMobile from "../../assets/images/sobremesas/cards/cocada-mobile.webp";
+import mousseMaracujaMobile from "../../assets/images/sobremesas/cards/mousseMaracuja-mobile.webp";
 
 export default function Sobremesas() {
   const items = [

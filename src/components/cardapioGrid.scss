@@ -12,8 +12,9 @@
     animation: fadeIn .25s ease;
 
     .modal-content {
-      width: min(92vw, 720px);
-      max-height: 85vh;
+      width: 90vw;
+      height: 70vh;
+
       border-radius: .8rem;
       position: relative;
       overflow: hidden;

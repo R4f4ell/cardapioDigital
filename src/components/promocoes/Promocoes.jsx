@@ -1,9 +1,9 @@
 import CardapioGrid from "../CardapioGrid";
 
 // Imports das imagens
-import feijoadaCompletaMobile from "../../assets/images/promocoes/feijoadaCompleta-mobile.webp";
-import pudimMobile from "../../assets/images/promocoes/pudim-mobile.webp";
-import rodizioPizzaMobile from "../../assets/images/promocoes/rodizioPizza-mobile.webp";
+import feijoadaCompletaMobile from "../../assets/images/promocoes/cards/feijoadaCompleta-mobile.webp";
+import pudimMobile from "../../assets/images/promocoes/cards/pudim-mobile.webp";
+import rodizioPizzaMobile from "../../assets/images/promocoes/cards/rodizioPizza-mobile.webp";
 
 export default function Promocoes() {
   const items = [

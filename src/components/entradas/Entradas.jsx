@@ -1,9 +1,9 @@
 import CardapioGrid from "../CardapioGrid";
 
-import paoDeAlhoMobile from "../../assets/images/entradas/paoDeAlho-mobile.webp";
-import bolinhoBacalhauMobile from "../../assets/images/entradas/bolinhoBacalhau-mobile.webp";
-import calabresaAceboladaMobile from "../../assets/images/entradas/calabresaAceboladaNaChapa-mobile.webp";
-import coxinhaFrangoCatupiryMobile from "../../assets/images/entradas/coxinhaFrangoComCatupiry-mobile.webp";
+import paoDeAlhoMobile from "../../assets/images/entradas/cards/paoDeAlho-mobile.webp";
+import bolinhoBacalhauMobile from "../../assets/images/entradas/cards/bolinhoBacalhau-mobile.webp";
+import calabresaAceboladaMobile from "../../assets/images/entradas/cards/calabresaAceboladaNaChapa-mobile.webp";
+import coxinhaFrangoCatupiryMobile from "../../assets/images/entradas/cards/coxinhaFrangoComCatupiry-mobile.webp";
 
 export default function Entradas() {
   const items = [
