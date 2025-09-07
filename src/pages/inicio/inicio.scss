@@ -6,16 +6,35 @@
   min-height: 100svh;
   overflow: clip;
 
-  @supports (height: 100dvh){
+  @supports (height: 100dvh) {
     min-height: 100dvh;
   }
 
   &__background {
     position: absolute;
     inset: 0;
-    background: url("../../assets/images/inicio/imgInicial-mobile.webp") no-repeat center/cover;
     z-index: -1;
+
+    svg {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: clamp(120px, 18vh, 220px);
+      display: block;
+    }
   }
+
+  .inicio__bg-img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: -2;
+  }
+
+
 
   /* Logo */
   &__header {
@@ -51,7 +70,7 @@
     text-align: center;
     width: 100%;
     text-shadow: 0 0 8px rgba(255, 215, 0, 0.5),
-               0 0 12px rgba(34, 139, 34, 0.4);
+      0 0 12px rgba(34, 139, 34, 0.4);
   }
 
   /* Botão Animado */
@@ -68,7 +87,7 @@
     background-size: 300% 300%;
     background-image:
       linear-gradient(#161a25, #161a25),
-      linear-gradient(137.48deg, #228B22 10%, #FFD700 45%, #000000 67%, #161a25 87%); 
+      linear-gradient(137.48deg, #228B22 10%, #FFD700 45%, #000000 67%, #161a25 87%);
     background-origin: border-box;
     background-clip: content-box, border-box;
     animation: gradient_301 5s ease infinite;
@@ -88,11 +107,11 @@
   &__container-stars {
     position: absolute;
     inset: 0;
-    z-index: 1; 
+    z-index: 1;
     overflow: hidden;
     border-radius: 5rem;
     backdrop-filter: blur(1rem);
-    background-color: #161a25; 
+    background-color: #161a25;
   }
 
   &__stars {
@@ -131,7 +150,7 @@
     position: absolute;
     display: flex;
     width: 12rem;
-    z-index: 2; 
+    z-index: 2;
 
     .circle {
       position: absolute;
@@ -142,7 +161,7 @@
     }
 
     .circle:nth-of-type(1) {
-      background: rgba(230, 57, 70, 0.62); 
+      background: rgba(230, 57, 70, 0.62);
       animation: orbit 8s linear infinite;
     }
 
@@ -155,22 +174,45 @@
 
 /* Animações */
 @keyframes gradient_301 {
-  0%   { background-position:   0% 50%; }
-  50%  { background-position: 100% 50%; }
-  100% { background-position:   0% 50%; }
+  0% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+  }
 }
 
 @keyframes orbit {
-  from { transform: rotate(0deg)   translateX(100px) rotate(0deg); }
-  to   { transform: rotate(360deg) translateX(100px) rotate(-360deg); }
+  from {
+    transform: rotate(0deg) translateX(100px) rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg) translateX(100px) rotate(-360deg);
+  }
 }
 
 @keyframes animStar {
-  from { transform: translateY(0); }
-  to   { transform: translateY(-135rem); }
+  from {
+    transform: translateY(0);
+  }
+
+  to {
+    transform: translateY(-135rem);
+  }
 }
 
 @keyframes animStarRotate {
-  from { transform: rotate(360deg); }
-  to   { transform: rotate(0); }
+  from {
+    transform: rotate(360deg);
+  }
+
+  to {
+    transform: rotate(0);
+  }
 }
