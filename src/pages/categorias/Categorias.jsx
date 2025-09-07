@@ -1,4 +1,6 @@
 import { useState, useCallback, useEffect, useRef } from "react";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import logo from "../../assets/images/inicio/logoFavicon.png";
 
 // Imports das categorias
@@ -10,6 +12,8 @@ import Combos from "../../components/combos/Combos";
 import Promocoes from "../../components/promocoes/Promocoes";
 
 import "./categorias.scss";
+
+gsap.registerPlugin(ScrollTrigger);
 
 const CATEGORIES = [
   { key: "entradas", label: "Entradas" },
@@ -28,11 +32,52 @@ export default function Categorias() {
   const burgerLabelRef = useRef(null);
   const wasOpenRef = useRef(false);
   const scrollYRef = useRef(0);
+  const headerRef = useRef(null);
+
+  // flag para NÃO restaurar o scroll antigo ao fechar o menu quando trocamos de categoria
+  const skipScrollRestoreRef = useRef(false);
 
   const selectCategory = useCallback((key) => {
     setActive(key);
+    // marcamos para não restaurar a posição anterior no cleanup do lock de scroll
+    skipScrollRestoreRef.current = true;
     setMenuOpen(false);
+    // força subir pro topo SEMPRE ao trocar de categoria
     window.scrollTo({ top: 0, behavior: "smooth" });
+  }, []);
+
+  /* ==== Animações GSAP no header ==== */
+  useEffect(() => {
+    if (headerRef.current) {
+      gsap.fromTo(
+        headerRef.current,
+        { y: -80, opacity: 0 },
+        {
+          y: 0,
+          opacity: 1,
+          duration: 0.6,
+          ease: "power2.out",
+          scrollTrigger: {
+            trigger: ".categorias__content",
+            start: "top top+=50",
+            toggleActions: "play none none reverse",
+          },
+        }
+      );
+
+      gsap.to(headerRef.current, {
+        backdropFilter: "blur(10px)",
+        "-webkit-backdrop-filter": "blur(10px)", // suporte iOS/Safari
+        duration: 0.3,
+        ease: "power1.out",
+        scrollTrigger: {
+          trigger: ".categorias__content",
+          start: "top top",
+          end: "bottom top",
+          scrub: true,
+        },
+      });
+    }
   }, []);
 
   useEffect(() => {
@@ -48,7 +93,13 @@ export default function Categorias() {
         bodyTop: body.style.top,
         bodyWidth: body.style.width,
         bodyTouchAction: body.style.touchAction,
+        htmlBg: html.style.backgroundColor,
+        bodyBg: body.style.backgroundColor,
       };
+
+      // evita o "fundo branco" atrás do header com blur quando o body fica fixed
+      html.style.backgroundColor = "#0f1117";
+      body.style.backgroundColor = "#0f1117";
 
       scrollYRef.current = window.scrollY;
       html.style.overflow = "hidden";
@@ -79,8 +130,17 @@ export default function Categorias() {
         body.style.width = prev.bodyWidth;
         body.style.touchAction = prev.bodyTouchAction;
 
-        // retorna para a posição anterior
-        window.scrollTo(0, scrollYRef.current);
+        // restaura os backgrounds originais
+        html.style.backgroundColor = prev.htmlBg;
+        body.style.backgroundColor = prev.bodyBg;
+
+        // Se NÃO clicamos em categoria, restaurar posição antiga
+        if (!skipScrollRestoreRef.current) {
+          window.scrollTo(0, scrollYRef.current);
+        } else {
+          // consumimos o "skip" para o próximo ciclo
+          skipScrollRestoreRef.current = false;
+        }
       };
     } else {
       if (wasOpenRef.current && burgerLabelRef.current) {
@@ -92,7 +152,7 @@ export default function Categorias() {
 
   return (
     <main className="categorias">
-      <header className="categorias__header">
+      <header ref={headerRef} className="categorias__header">
         <img src={logo} alt="Logo do sistema" className="logo categorias__logo" />
 
         <label

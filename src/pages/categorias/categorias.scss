@@ -12,13 +12,20 @@
   }
 
   &__header {
-    position: sticky;
+    position: fixed;
     top: 0;
-    z-index: 2;
+    left: 0;
+    width: 100%;
+    z-index: 10;
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding: 1rem;
+
+    /* só blur, sem background */
+    backdrop-filter: blur(0px);
+    -webkit-backdrop-filter: blur(0px);
+    transition: backdrop-filter 0.3s ease;
   }
 
   &__content {
@@ -26,7 +33,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 1.5rem;
+    padding: 6rem 1.5rem 1.5rem; /* padding-top para compensar o header fixo */
     text-align: center;
   }
 
@@ -79,9 +86,9 @@
 
     &.is-active {
       background: v.$global-gradient;
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
     }
   }
 
@@ -138,7 +145,6 @@
   will-change: transform, opacity;
 }
 
-/* Se o usuário preferir menos movimento, não force transições visuais */
 @media (prefers-reduced-motion: reduce) {
   .categoria-card {
     transition: none !important;
