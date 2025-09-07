@@ -34,8 +34,6 @@
     z-index: -2;
   }
 
-
-
   /* Logo */
   &__header {
     position: absolute;
@@ -174,45 +172,22 @@
 
 /* Animações */
 @keyframes gradient_301 {
-  0% {
-    background-position: 0% 50%;
-  }
-
-  50% {
-    background-position: 100% 50%;
-  }
-
-  100% {
-    background-position: 0% 50%;
-  }
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
 }
 
 @keyframes orbit {
-  from {
-    transform: rotate(0deg) translateX(100px) rotate(0deg);
-  }
-
-  to {
-    transform: rotate(360deg) translateX(100px) rotate(-360deg);
-  }
+  from { transform: rotate(0deg) translateX(100px) rotate(0deg); }
+  to   { transform: rotate(360deg) translateX(100px) rotate(-360deg); }
 }
 
 @keyframes animStar {
-  from {
-    transform: translateY(0);
-  }
-
-  to {
-    transform: translateY(-135rem);
-  }
+  from { transform: translateY(0); }
+  to   { transform: translateY(-135rem); }
 }
 
 @keyframes animStarRotate {
-  from {
-    transform: rotate(360deg);
-  }
-
-  to {
-    transform: rotate(0);
-  }
+  from { transform: rotate(360deg); }
+  to   { transform: rotate(0); }
 }
