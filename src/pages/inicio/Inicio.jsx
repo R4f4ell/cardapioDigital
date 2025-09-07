@@ -32,37 +32,52 @@ const Inicio = () => {
       return;
     }
 
-    // Garante invisibilidade inicial
+    // estado inicial (invisíveis)
     selectors.forEach((sel) =>
       document.querySelectorAll(sel).forEach((el) => {
         el.style.opacity = "0";
+        el.style.willChange = "transform, opacity";
       })
     );
 
-    const tl = anime.timeline({ autoplay: true });
+    // inicia animação de forma sincronizada com repaint
+    const startAnimation = () => {
+      const tl = anime.timeline({ autoplay: true });
 
-    // Fundo (imagem + onda) e logo juntos
-    tl.add({
-      targets: [".inicio__bg-img", ".inicio__background svg", ".logo"],
-      opacity: [0, 1],
-      translateY: [-20, 0],
-      scale: [1.06, 1],
-      duration: 1000,
-      easing: "easeOutQuad",
-    })
+      // Fundo (imagem + onda) e logo
+      tl.add({
+        targets: [".inicio__bg-img", ".inicio__background svg", ".logo"],
+        opacity: [0, 1],
+        translateY: [-20, 0],
+        scale: [1.06, 1],
+        duration: 1000,
+        easing: "easeOutQuad",
+        complete: (anim) => {
+          anim.animatables.forEach((a) => (a.target.style.willChange = "auto"));
+        },
+      });
 
-    // Título e botão juntos
-    .add({
-      targets: [".inicio__title", ".inicio__button"],
-      opacity: [0, 1],
-      translateY: [20, 0],
-      scale: [0.94, 1],
-      duration: 700,
-      easing: "easeOutBack",
-    });
+      // Título e botão (levemente escalonado)
+      tl.add({
+        targets: [".inicio__title", ".inicio__button"],
+        opacity: [0, 1],
+        translateY: [20, 0],
+        scale: [0.94, 1],
+        duration: 800,
+        delay: anime.stagger(100),
+        easing: "easeOutBack",
+        complete: (anim) => {
+          anim.animatables.forEach((a) => (a.target.style.willChange = "auto"));
+        },
+      });
+    };
+
+    // garante start após o primeiro repaint
+    const rafId = requestAnimationFrame(startAnimation);
 
     return () => {
-      try { tl.pause(); } catch {}
+      cancelAnimationFrame(rafId);
+      anime.remove(selectors); // limpa animações se desmontar
     };
   }, []);
 

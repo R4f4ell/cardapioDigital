@@ -52,29 +52,33 @@ export default function CardapioGrid({ title, items }) {
         const [entry] = entries;
         if (!entry.isIntersecting) return;
 
-        // Animação do título
-        if (sectionTitle) {
+        requestAnimationFrame(() => {
+          // Animação do título
+          if (sectionTitle) {
+            anime({
+              targets: sectionTitle,
+              opacity: [0, 1],
+              scale: [0.97, 1],
+              duration: 500,
+              easing: "easeOutCubic",
+              complete: () => (sectionTitle.style.willChange = "auto"),
+            });
+          }
+
+          // Animação dos cards
           anime({
-            targets: sectionTitle,
+            targets: cards,
             opacity: [0, 1],
             scale: [0.97, 1],
-            duration: 450,
+            delay: anime.stagger(
+              window.innerWidth < 768 ? 120 : 80 // mobile = mais espaçado
+            ),
+            duration: 500,
             easing: "easeOutCubic",
-            complete: () => (sectionTitle.style.willChange = "auto"),
+            complete: () => {
+              cards.forEach((el) => (el.style.willChange = "auto"));
+            },
           });
-        }
-
-        // Animação dos cards
-        anime({
-          targets: cards,
-          opacity: [0, 1],
-          scale: [0.97, 1],
-          delay: anime.stagger(80),
-          duration: 450,
-          easing: "easeOutCubic",
-          complete: () => {
-            cards.forEach((el) => (el.style.willChange = "auto"));
-          },
         });
 
         io.unobserve(grid);
