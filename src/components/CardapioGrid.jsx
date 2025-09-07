@@ -1,16 +1,93 @@
+import { useEffect, useRef } from "react";
+import anime from "animejs/lib/anime.es.js";
 import { Eye, X } from "lucide-react";
-import useScrollRevealCategorias from "../hooks/useScrollRevealCategorias";
 import useCardapioModal from "../hooks/useCardapioModal";
 import "./cardapioGrid.scss";
 
 export default function CardapioGrid({ title, items }) {
   const { selected, openModal, closeModal } = useCardapioModal();
+  const sectionRef = useRef(null);
 
-  // ScrollReveal nos cards
-  useScrollRevealCategorias(".categoria-card.sr-card");
+  useEffect(() => {
+    const root = sectionRef.current;
+    if (!root) return;
+
+    const reduce =
+      typeof window !== "undefined" &&
+      window.matchMedia &&
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    const cards = root.querySelectorAll(".categoria-card.sr-card");
+    const sectionTitle = root.querySelector(".section-title");
+
+    // estado inicial
+    if (sectionTitle) {
+      sectionTitle.style.opacity = "0";
+      sectionTitle.style.transform = "scale(0.97)";
+      sectionTitle.style.willChange = "transform, opacity";
+    }
+    cards.forEach((el) => {
+      el.style.opacity = "0";
+      el.style.transform = "scale(0.97)";
+      el.style.willChange = "transform, opacity";
+    });
+
+    if (reduce) {
+      if (sectionTitle) {
+        sectionTitle.style.opacity = "1";
+        sectionTitle.style.transform = "none";
+      }
+      cards.forEach((el) => {
+        el.style.opacity = "1";
+        el.style.transform = "none";
+      });
+      return;
+    }
+
+    const grid = root.querySelector(".cards-grid");
+    if (!grid) return;
+
+    const io = new IntersectionObserver(
+      (entries) => {
+        const [entry] = entries;
+        if (!entry.isIntersecting) return;
+
+        // Animação do título
+        if (sectionTitle) {
+          anime({
+            targets: sectionTitle,
+            opacity: [0, 1],
+            scale: [0.97, 1],
+            duration: 450,
+            easing: "easeOutCubic",
+            complete: () => (sectionTitle.style.willChange = "auto"),
+          });
+        }
+
+        // Animação dos cards
+        anime({
+          targets: cards,
+          opacity: [0, 1],
+          scale: [0.97, 1],
+          delay: anime.stagger(80),
+          duration: 450,
+          easing: "easeOutCubic",
+          complete: () => {
+            cards.forEach((el) => (el.style.willChange = "auto"));
+          },
+        });
+
+        io.unobserve(grid);
+      },
+      { threshold: 0.2, rootMargin: "0px 0px -10% 0px" }
+    );
+
+    io.observe(grid);
+    return () => io.disconnect();
+  }, []);
 
   return (
-    <section className="cardapio-section">
+    <section ref={sectionRef} className="cardapio-section">
       <h2 className="section-title">{title}</h2>
 
       <div className="cards-grid">
