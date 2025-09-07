@@ -39,7 +39,6 @@ export default function Categorias() {
 
   const selectCategory = useCallback((key) => {
     setActive(key);
-    // marcamos para não restaurar a posição anterior no cleanup do lock de scroll
     skipScrollRestoreRef.current = true;
     setMenuOpen(false);
     // força subir pro topo SEMPRE ao trocar de categoria
@@ -97,7 +96,6 @@ export default function Categorias() {
         bodyBg: body.style.backgroundColor,
       };
 
-      // evita o "fundo branco" atrás do header com blur quando o body fica fixed
       html.style.backgroundColor = "#0f1117";
       body.style.backgroundColor = "#0f1117";
 
@@ -109,7 +107,6 @@ export default function Categorias() {
       body.style.width = "100%";
       body.style.touchAction = "none";
 
-      // Acessibilidade: foca o primeiro link
       const firstBtn =
         overlayRef.current &&
         overlayRef.current.querySelector("button.categorias__link");
@@ -130,21 +127,19 @@ export default function Categorias() {
         body.style.width = prev.bodyWidth;
         body.style.touchAction = prev.bodyTouchAction;
 
-        // restaura os backgrounds originais
         html.style.backgroundColor = prev.htmlBg;
         body.style.backgroundColor = prev.bodyBg;
 
-        // Se NÃO clicamos em categoria, restaurar posição antiga
         if (!skipScrollRestoreRef.current) {
           window.scrollTo(0, scrollYRef.current);
         } else {
-          // consumimos o "skip" para o próximo ciclo
           skipScrollRestoreRef.current = false;
         }
       };
     } else {
+      // devolve o foco ao botão hamburger sem causar scroll
       if (wasOpenRef.current && burgerLabelRef.current) {
-        burgerLabelRef.current.focus();
+        burgerLabelRef.current.focus({ preventScroll: true });
       }
     }
     wasOpenRef.current = menuOpen;
