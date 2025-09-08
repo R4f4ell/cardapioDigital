@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react";
 import anime from "animejs/lib/anime.es.js";
 import { Eye, X } from "lucide-react";
-import useCardapioModal from "../hooks/useCardapioModal"
+import useCardapioModal from "../hooks/useCardapioModal";
 
 export default function CardapioGrid({ title, items }) {
   const { selected, openModal, closeModal } = useCardapioModal();
@@ -130,18 +130,30 @@ export default function CardapioGrid({ title, items }) {
       </div>
 
       {selected && (
-        <div className="modal" role="dialog" aria-modal="true" onClick={closeModal}>
+        <div
+          className="modal"
+          role="dialog"
+          aria-modal="true"
+          onClick={closeModal}
+        >
           <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-            <button className="modal-close" aria-label="Fechar" onClick={closeModal}>
+            <button
+              className="modal-close"
+              aria-label="Fechar"
+              onClick={closeModal}
+            >
               <X size={32} />
             </button>
+
+            {/* PRIORIDADE: usa imagem exclusiva do modal, senão cai na do card */}
             <img
-              src={selected.img}
+              src={selected.modalImg || selected.img}
               alt={selected.nome}
               className="modal-img"
               width="900"
               height="675"
             />
+
             <div className="modal-overlay">
               <h3 className="modal-title">{selected.nome}</h3>
             </div>
