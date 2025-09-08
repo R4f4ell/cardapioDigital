@@ -1,19 +1,18 @@
-import { useState, useCallback, useEffect, useRef } from "react";
+import { useState, useCallback, useEffect, useRef, Suspense, lazy } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import logo from "../../assets/images/inicio/logoFavicon.png";
-
-// Imports das categorias
-import Entradas from "../../components/Entradas";
-import Pratos from "../../components/Pratos";
-import Sobremesas from "../../components/Sobremesas";
-import Bebidas from "../../components/Bebidas";
-import Combos from "../../components/Combos";
-import Promocoes from "../../components/Promocoes";
-
 import "./categorias.scss";
 
 gsap.registerPlugin(ScrollTrigger);
+
+// Import das categorias com lazy loading
+const Entradas   = lazy(() => import("../../components/Entradas"));
+const Pratos     = lazy(() => import("../../components/Pratos"));
+const Sobremesas = lazy(() => import("../../components/Sobremesas"));
+const Bebidas    = lazy(() => import("../../components/Bebidas"));
+const Combos     = lazy(() => import("../../components/Combos"));
+const Promocoes  = lazy(() => import("../../components/Promocoes"));
 
 const CATEGORIES = [
   { key: "entradas", label: "Entradas" },
@@ -33,16 +32,31 @@ export default function Categorias() {
   const wasOpenRef = useRef(false);
   const scrollYRef = useRef(0);
   const headerRef = useRef(null);
-
-  // flag para NÃO restaurar o scroll antigo ao fechar o menu quando trocamos de categoria
   const skipScrollRestoreRef = useRef(false);
 
   const selectCategory = useCallback((key) => {
     setActive(key);
     skipScrollRestoreRef.current = true;
     setMenuOpen(false);
-    // força subir pro topo SEMPRE ao trocar de categoria
     window.scrollTo({ top: 0, behavior: "smooth" });
+  }, []);
+
+  // Prefetch: já carrega os módulos das categorias em segundo plano
+  useEffect(() => {
+    const preload = () => {
+      import("../../components/Entradas");
+      import("../../components/Pratos");
+      import("../../components/Sobremesas");
+      import("../../components/Bebidas");
+      import("../../components/Combos");
+      import("../../components/Promocoes");
+    };
+    if ("requestIdleCallback" in window) {
+      // @ts-ignore
+      requestIdleCallback(preload, { timeout: 2000 });
+    } else {
+      setTimeout(preload, 1200);
+    }
   }, []);
 
   /* ==== Animações GSAP no header ==== */
@@ -79,9 +93,9 @@ export default function Categorias() {
     }
   }, []);
 
+  /* ==== Controle do menu hambúrguer ==== */
   useEffect(() => {
     if (menuOpen) {
-      // ===== Bloqueio de scroll robusto (inclusive iOS Safari) =====
       const html = document.documentElement;
       const body = document.body;
 
@@ -137,7 +151,6 @@ export default function Categorias() {
         }
       };
     } else {
-      // devolve o foco ao botão hamburger sem causar scroll
       if (wasOpenRef.current && burgerLabelRef.current) {
         burgerLabelRef.current.focus({ preventScroll: true });
       }
@@ -176,12 +189,14 @@ export default function Categorias() {
       </header>
 
       <section className="categorias__content">
-        {active === "entradas" && <Entradas />}
-        {active === "pratos" && <Pratos />}
-        {active === "sobremesas" && <Sobremesas />}
-        {active === "bebidas" && <Bebidas />}
-        {active === "combos" && <Combos />}
-        {active === "promocoes" && <Promocoes />}
+        <Suspense fallback={null}>
+          {active === "entradas"   && <Entradas />}
+          {active === "pratos"     && <Pratos />}
+          {active === "sobremesas" && <Sobremesas />}
+          {active === "bebidas"    && <Bebidas />}
+          {active === "combos"     && <Combos />}
+          {active === "promocoes"  && <Promocoes />}
+        </Suspense>
       </section>
 
       <div

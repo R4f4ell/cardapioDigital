@@ -1,20 +1,21 @@
-import CardapioGrid from "../CardapioGrid";
+import CardapioGrid from "./CardapioGrid";
 
-// // Imagens dos cards
-import acaiTigelaMobile from "../../assets/images/sobremesas/cards/acaiTigela-mobile.webp";
-import brigadeiroGourmetMobile from "../../assets/images/sobremesas/cards/brigadeiroGourmet-mobile.webp";
-import cocadaMobile from "../../assets/images/sobremesas/cards/cocada-mobile.webp";
-import mousseMaracujaMobile from "../../assets/images/sobremesas/cards/mousseMaracuja-mobile.webp";
-import pudimMobile from "../../assets/images/sobremesas/cards/pudim-mobile.webp";
+// Imagens dos cards
+import acaiTigelaMobile from "../assets/images/sobremesas/cards/acaiTigela-mobile.webp";
+import brigadeiroGourmetMobile from "../assets/images/sobremesas/cards/brigadeiroGourmet-mobile.webp";
+import cocadaMobile from "../assets/images/sobremesas/cards/cocada-mobile.webp";
+import mousseMaracujaMobile from "../assets/images/sobremesas/cards/mousseMaracuja-mobile.webp";
+import pudimMobile from "../assets/images/sobremesas/cards/pudim-mobile.webp";
 
 // Imagens dos modais
-import acaiTigelaModalMobile from "../../assets/images/sobremesas/modal/acaiTigelaModal-mobile.webp";
-import brigadeiroGourmetModalMobile from "../../assets/images/sobremesas/modal/brigadeiroGourmetModal-mobile.webp";
-import cocadaModalMobile from "../../assets/images/sobremesas/modal/cocadaModal-mobile.webp";
-import mousseMaracujaModalMobile from "../../assets/images/sobremesas/modal/mousseMaracujaModal-mobile.webp";
-import pudimModalMobile from "../../assets/images/sobremesas/modal/pudimModal-mobile.webp";
+import acaiTigelaModalMobile from "../assets/images/sobremesas/modal/acaiTigelaModal-mobile.webp";
+import brigadeiroGourmetModalMobile from "../assets/images/sobremesas/modal/brigadeiroGourmetModal-mobile.webp";
+import cocadaModalMobile from "../assets/images/sobremesas/modal/cocadaModal-mobile.webp";
+import mousseMaracujaModalMobile from "../assets/images/sobremesas/modal/mousseMaracujaModal-mobile.webp";
+import pudimModalMobile from "../assets/images/sobremesas/modal/pudimModal-mobile.webp";
 
 export default function Sobremesas() {
+  // Lista de itens que vai para o grid
   const items = [
     {
       id: 1,

@@ -9,11 +9,13 @@ const Inicio = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
+    // Detecta se o usuário prefere menos animações
     const prefersReduced =
       typeof window !== "undefined" &&
       window.matchMedia &&
       window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
+    // Elementos que terão animação
     const selectors = [
       ".inicio__bg-img",
       ".inicio__background svg",
@@ -32,7 +34,7 @@ const Inicio = () => {
       return;
     }
 
-    // estado inicial (invisíveis)
+    // Deixa os elementos invisíveis antes de animar
     selectors.forEach((sel) =>
       document.querySelectorAll(sel).forEach((el) => {
         el.style.opacity = "0";
@@ -40,11 +42,11 @@ const Inicio = () => {
       })
     );
 
-    // inicia animação de forma sincronizada com repaint
+    // Função que dispara a timeline de animações
     const startAnimation = () => {
       const tl = anime.timeline({ autoplay: true });
 
-      // Fundo (imagem + onda) e logo
+      // Primeiro: fundo (imagem + onda) e logo
       tl.add({
         targets: [".inicio__bg-img", ".inicio__background svg", ".logo"],
         opacity: [0, 1],
@@ -57,7 +59,7 @@ const Inicio = () => {
         },
       });
 
-      // Título e botão (levemente escalonado)
+      // Depois: título e botão (entra com leve escala)
       tl.add({
         targets: [".inicio__title", ".inicio__button"],
         opacity: [0, 1],
@@ -72,21 +74,30 @@ const Inicio = () => {
       });
     };
 
-    // garante start após o primeiro repaint
+    // Dispara animação assim que o navegador estiver pronto para pintar
     const rafId = requestAnimationFrame(startAnimation);
 
+    // Limpeza se desmontar
     return () => {
       cancelAnimationFrame(rafId);
-      anime.remove(selectors); // limpa animações se desmontar
+      anime.remove(selectors);
     };
   }, []);
 
   return (
     <main className="inicio">
-      {/* Fundo escuro + onda SVG */}
+      {/* Fundo com imagem + onda SVG */}
       <div className="inicio__background">
-        <img src={imgFundo} alt="" className="inicio__bg-img" loading="eager" />
+        <img
+          src={imgFundo}
+          alt=""
+          className="inicio__bg-img"
+          loading="eager"        // carrega logo no início
+          decoding="async"       // decodifica de forma assíncrona (mais rápido)
+          fetchpriority="high"   // dá prioridade máxima para o navegador baixar
+        />
 
+        {/* Onda SVG que fica sobre o fundo */}
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320" preserveAspectRatio="none">
           <defs>
             <linearGradient id="waveGrad" x1="0" x2="0" y1="0" y2="1">
@@ -101,10 +112,19 @@ const Inicio = () => {
         </svg>
       </div>
 
+      {/* Header com logo */}
       <header className="inicio__header">
-        <img src={logo} alt="Logo do sistema" className="logo" loading="eager" />
+        <img
+          src={logo}
+          alt="Logo do sistema"
+          className="logo"
+          loading="eager"
+          decoding="async"
+          fetchpriority="high"
+        />
       </header>
 
+      {/* Conteúdo central (título + botão entrar) */}
       <section className="inicio__content">
         <h1 className="inicio__title">Santana</h1>
 
@@ -113,16 +133,17 @@ const Inicio = () => {
           className="inicio__button"
           aria-label="Entrar no sistema"
           onClick={() => {
+            // Salva flag na sessão para liberar acesso à página de categorias
             sessionStorage.setItem("allowCategorias", "1");
             navigate("/categorias", { state: { viaButton: true } });
           }}
         >
           <strong>ENTRAR</strong>
 
+          {/* Efeitos visuais do botão */}
           <div className="inicio__container-stars">
             <div className="inicio__stars"></div>
           </div>
-
           <div className="inicio__glow">
             <div className="circle"></div>
             <div className="circle"></div>

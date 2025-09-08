@@ -1,23 +1,21 @@
-import CardapioGrid from "../CardapioGrid";
+import CardapioGrid from "./CardapioGrid";
 
 // Imagens dos cards
-import churrascoMistoMobile from "../../assets/images/pratos/cards/churrascoMisto-mobile.webp";
-import feijoadaCompletaMobile from "../../assets/images/pratos/cards/feijoadaCompleta-mobile.webp";
-import moquecaPeixeMobile from "../../assets/images/pratos/cards/moquecaPeixe-mobile.webp";
-import peixeFritoPiraoMobile from "../../assets/images/pratos/cards/peixeFritoPirao-mobile.webp";
-import pratoFeitoMobile from "../../assets/images/pratos/cards/pratoFeito-mobile.webp";
+import churrascoMistoMobile from "../assets/images/pratos/cards/churrascoMisto-mobile.webp";
+import feijoadaCompletaMobile from "../assets/images/pratos/cards/feijoadaCompleta-mobile.webp";
+import moquecaPeixeMobile from "../assets/images/pratos/cards/moquecaPeixe-mobile.webp";
+import peixeFritoPiraoMobile from "../assets/images/pratos/cards/peixeFritoPirao-mobile.webp";
+import pratoFeitoMobile from "../assets/images/pratos/cards/pratoFeito-mobile.webp";
 
 // Imagens dos modais
-
-import churrascoMistoModalMobile from "../../assets/images/pratos/modal/churrascoMistoModal-mobile.webp"
-import feijoadaCompletaModalMobile from "../../assets/images/pratos/modal/feijoadaCompletaModal-mobile.webp"
-import moquecaPeixeModalMobile from "../../assets/images/pratos/modal/moquecaPeixeModal-mobile.webp"
-import peixeFritoPiraoModalMobile from "../../assets/images/pratos/modal/peixeFritoPiraoModal-mobile.webp"
-import pratoFeitoModalMobile from "../../assets/images/pratos/modal/pratoFeitoModal-mobile.webp"
-// Do modal: 1080 X 1920
-// Do card 900 X 675
+import churrascoMistoModalMobile from "../assets/images/pratos/modal/churrascoMistoModal-mobile.webp";
+import feijoadaCompletaModalMobile from "../assets/images/pratos/modal/feijoadaCompletaModal-mobile.webp";
+import moquecaPeixeModalMobile from "../assets/images/pratos/modal/moquecaPeixeModal-mobile.webp";
+import peixeFritoPiraoModalMobile from "../assets/images/pratos/modal/peixeFritoPiraoModal-mobile.webp";
+import pratoFeitoModalMobile from "../assets/images/pratos/modal/pratoFeitoModal-mobile.webp";
 
 export default function Pratos() {
+  // Lista de itens que vai para o grid
   const items = [
     {
       id: 1,

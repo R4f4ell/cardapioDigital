@@ -1,18 +1,19 @@
-import CardapioGrid from "../CardapioGrid";
+import CardapioGrid from "./CardapioGrid";
 
-// Imagens dos cards
-import bolinhoBacalhauMobile from "../../assets/images/entradas/cards/bolinhoBacalhau-mobile.webp";
-import calabresaAceboladaMobile from "../../assets/images/entradas/cards/calabresaAcebolada-mobile.webp";
-import coxinhaFrangoCatupiryMobile from "../../assets/images/entradas/cards/coxinhaFrangoComCatupiry-mobile.webp";
-import paoDeAlhoMobile from "../../assets/images/entradas/cards/paoDeAlho-mobile.webp";
+// Imagens para os cards
+import bolinhoBacalhauMobile from "../assets/images/entradas/cards/bolinhoBacalhau-mobile.webp";
+import calabresaAceboladaMobile from "../assets/images/entradas/cards/calabresaAcebolada-mobile.webp";
+import coxinhaFrangoCatupiryMobile from "../assets/images/entradas/cards/coxinhaFrangoComCatupiry-mobile.webp";
+import paoDeAlhoMobile from "../assets/images/entradas/cards/paoDeAlho-mobile.webp";
 
-// Imagens dos modais
-import bolinhoBacalhauModalMobile from "../../assets/images/entradas/modal/bolinhoBacalhauModal-mobile.webp"
-import calabresaAceboladaModalMobile from "../../assets/images/entradas/modal/calabresaAceboladaModal-mobile.webp"
-import coxinhaFrangoComCatupiryModalMobile from "../../assets/images/entradas/modal/coxinhaFrangoComCatupiryModal-mobile.webp"
-import paoDeAlhoModalMobile from "../../assets/images/entradas/modal/paoDeAlhoModal-mobile.webp";
+// Imagens para os modais 
+import bolinhoBacalhauModalMobile from "../assets/images/entradas/modal/bolinhoBacalhauModal-mobile.webp";
+import calabresaAceboladaModalMobile from "../assets/images/entradas/modal/calabresaAceboladaModal-mobile.webp";
+import coxinhaFrangoComCatupiryModalMobile from "../assets/images/entradas/modal/coxinhaFrangoComCatupiryModal-mobile.webp";
+import paoDeAlhoModalMobile from "../assets/images/entradas/modal/paoDeAlhoModal-mobile.webp";
 
 export default function Entradas() {
+  // Lista de itens que vai para o grid
   const items = [
     {
       id: 1,
@@ -24,7 +25,7 @@ export default function Entradas() {
     },
     {
       id: 2,
-      img: bolinhoBacalhauMobile,   
+      img: bolinhoBacalhauMobile,
       modalImg: bolinhoBacalhauModalMobile,
       nome: "Bolinho de Bacalhau",
       desc: "Crocante por fora e macio por dentro",

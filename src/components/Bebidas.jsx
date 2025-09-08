@@ -1,18 +1,19 @@
-import CardapioGrid from "../CardapioGrid";
+import CardapioGrid from "./CardapioGrid";
 
 // Imagens dos cards
-import aguaDeCocoMobile from "../../assets/images/bebidas/cards/aguaDeCoco-mobile.webp";
-import cervejasMobile from "../../assets/images/bebidas/cards/cervejas-mobile.webp";
-import refrigerantesMobile from "../../assets/images/bebidas/cards/refrigerantes-mobile.webp";
-import sucosMobile from "../../assets/images/bebidas/cards/sucos-mobile.webp";
+import aguaDeCocoMobile from "../assets/images/bebidas/cards/aguaDeCoco-mobile.webp";
+import cervejasMobile from "../assets/images/bebidas/cards/cervejas-mobile.webp";
+import refrigerantesMobile from "../assets/images/bebidas/cards/refrigerantes-mobile.webp";
+import sucosMobile from "../assets/images/bebidas/cards/sucos-mobile.webp";
 
-// Imagens dos cards
-import aguaDeCocoModalMobile from "../../assets/images/bebidas/modal/aguaDeCocoModal-mobile.webp"
-import cervejasModalMobile from "../../assets/images/bebidas/modal/cervejasModal-mobile.webp"
-import refrigerantesModalMobile from "../../assets/images/bebidas/modal/refrigerantesModal-mobile.webp"
-import sucosModalMobile from "../../assets/images/bebidas/modal/sucosModal-mobile.webp"
+// Imagens dos modais
+import aguaDeCocoModalMobile from "../assets/images/bebidas/modal/aguaDeCocoModal-mobile.webp";
+import cervejasModalMobile from "../assets/images/bebidas/modal/cervejasModal-mobile.webp";
+import refrigerantesModalMobile from "../assets/images/bebidas/modal/refrigerantesModal-mobile.webp";
+import sucosModalMobile from "../assets/images/bebidas/modal/sucosModal-mobile.webp";
 
 export default function Bebidas() {
+  // Lista de itens que vai para o grid
   const items = [
     {
       id: 1,

@@ -1,16 +1,17 @@
 import CardapioGrid from "./CardapioGrid";
 
 // Imagens dos cards
-import feijoadaCompletaMobile from "../../assets/images/promocoes/cards/feijoadaCompleta-mobile.webp";
-import pudimMobile from "../../assets/images/promocoes/cards/pudim-mobile.webp";
-import rodizioPizzaMobile from "../../assets/images/promocoes/cards/rodizioPizza-mobile.webp";
+import feijoadaCompletaMobile from "../assets/images/promocoes/cards/feijoadaCompleta-mobile.webp";
+import pudimMobile from "../assets/images/promocoes/cards/pudim-mobile.webp";
+import rodizioPizzaMobile from "../assets/images/promocoes/cards/rodizioPizza-mobile.webp";
 
 // Imagens dos modais
-import feijoadaCompletaModalMobile from "../../assets/images/promocoes/modal/feijoadaCompletaModal-mobile.webp"
-import pudimModalMobile from "../../assets/images/promocoes/modal/pudimModal-mobile.webp"
-import rodizioPizzaModalMobile from "../../assets/images/promocoes/modal/rodizioPizzaModal-mobile.webp"
+import feijoadaCompletaModalMobile from "../assets/images/promocoes/modal/feijoadaCompletaModal-mobile.webp";
+import pudimModalMobile from "../assets/images/promocoes/modal/pudimModal-mobile.webp";
+import rodizioPizzaModalMobile from "../assets/images/promocoes/modal/rodizioPizzaModal-mobile.webp";
 
 export default function Promocoes() {
+  // Lista de itens que vai para o grid
   const items = [
     {
       id: 1,
