@@ -4,9 +4,12 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import logo from "../../assets/images/inicio/logoFavicon.png";
 import "./categorias.scss";
 
+// Hooks
+import useLockBodyScroll from "../../hooks/useLockBodyScroll";
+import useIdlePrefetch from "../../hooks/useIdlePrefetch";
+
 gsap.registerPlugin(ScrollTrigger);
 
-// Lazy das categorias (inalterado)
 const Entradas   = lazy(() => import("../../components/Entradas"));
 const Pratos     = lazy(() => import("../../components/Pratos"));
 const Sobremesas = lazy(() => import("../../components/Sobremesas"));
@@ -30,35 +33,40 @@ export default function Categorias() {
   const overlayRef = useRef(null);
   const burgerLabelRef = useRef(null);
   const wasOpenRef = useRef(false);
-  const scrollYRef = useRef(0);
   const headerRef = useRef(null);
-  const skipScrollRestoreRef = useRef(false);
+
+  // política de restauração ao destravar scroll: 'keep' por padrão
+  const [restoreStrategy, setRestoreStrategy] = useState("keep");
+
+  // trava scroll quando menu abre; destrava quando fecha
+  useLockBodyScroll(menuOpen, restoreStrategy);
 
   const selectCategory = useCallback((key) => {
     setActive(key);
-    // Só quando clica em um link queremos ir ao topo
-    skipScrollRestoreRef.current = true;
+    // ao clicar num link: não restaura posição anterior; rolaremos ao topo
+    setRestoreStrategy("none");
     setMenuOpen(false);
     window.scrollTo({ top: 0, behavior: "smooth" });
   }, []);
 
-  // Prefetch em idle (inalterado)
+  // volta a estratégia padrão após o menu fechar
   useEffect(() => {
-    const preload = () => {
-      import("../../components/Entradas");
-      import("../../components/Pratos");
-      import("../../components/Sobremesas");
-      import("../../components/Bebidas");
-      import("../../components/Combos");
-      import("../../components/Promocoes");
-    };
-    if ("requestIdleCallback" in window) {
-      // @ts-ignore
-      requestIdleCallback(preload, { timeout: 2000 });
-    } else {
-      setTimeout(preload, 1200);
+    if (!menuOpen) {
+      // pequena defasagem pra garantir que o unlock já ocorreu
+      const t = setTimeout(() => setRestoreStrategy("keep"), 0);
+      return () => clearTimeout(t);
     }
-  }, []);
+  }, [menuOpen]);
+
+  // Prefetch em idle dos módulos (antes estava inline)
+  useIdlePrefetch([
+    () => import("../../components/Entradas"),
+    () => import("../../components/Pratos"),
+    () => import("../../components/Sobremesas"),
+    () => import("../../components/Bebidas"),
+    () => import("../../components/Combos"),
+    () => import("../../components/Promocoes"),
+  ]);
 
   /* ==== Animações GSAP no header (inalterado) ==== */
   useEffect(() => {
@@ -93,84 +101,6 @@ export default function Categorias() {
       });
     }
   }, []);
-
-  /* ==== Controle do menu hambúrguer (ajuste no UNLOCK) ==== */
-  useEffect(() => {
-    if (menuOpen) {
-      const html = document.documentElement;
-      const body = document.body;
-
-      const prev = {
-        htmlOverflow: html.style.overflow,
-        bodyOverflow: body.style.overflow,
-        bodyPosition: body.style.position,
-        bodyTop: body.style.top,
-        bodyWidth: body.style.width,
-        bodyTouchAction: body.style.touchAction,
-        htmlBg: html.style.backgroundColor,
-        bodyBg: body.style.backgroundColor,
-      };
-
-      // Lock
-      html.style.backgroundColor = "#0f1117";
-      body.style.backgroundColor = "#0f1117";
-      scrollYRef.current = window.scrollY;
-      html.style.overflow = "hidden";
-      body.style.overflow = "hidden";
-      body.style.position = "fixed";
-      body.style.top = `-${scrollYRef.current}px`;
-      body.style.width = "100%";
-      body.style.touchAction = "none";
-
-      const firstBtn =
-        overlayRef.current &&
-        overlayRef.current.querySelector("button.categorias__link");
-      if (firstBtn) firstBtn.focus();
-
-      const onKeyDown = (e) => {
-        if (e.key === "Escape") setMenuOpen(false);
-      };
-      document.addEventListener("keydown", onKeyDown);
-
-      return () => {
-        document.removeEventListener("keydown", onKeyDown);
-
-        // === UNLOCK sem "animação" de scroll ===
-        const htmlEl = document.documentElement;
-        const prevScrollBehavior = htmlEl.style.scrollBehavior;
-        // Desliga qualquer scroll suave global só neste momento
-        htmlEl.style.scrollBehavior = "auto";
-
-        html.style.overflow = prev.htmlOverflow;
-        body.style.overflow = prev.bodyOverflow;
-        body.style.position = prev.bodyPosition;
-        body.style.top = prev.bodyTop;
-        body.style.width = prev.bodyWidth;
-        body.style.touchAction = prev.bodyTouchAction;
-        html.style.backgroundColor = prev.htmlBg;
-        body.style.backgroundColor = prev.bodyBg;
-
-        if (!skipScrollRestoreRef.current) {
-          // Restaura posição exata sem animação
-          window.scrollTo(0, scrollYRef.current);
-        } else {
-          // Foi clique em link (rolagem ao topo já foi chamada)
-          skipScrollRestoreRef.current = false;
-        }
-
-        // Restaura configuração anterior do comportamento de scroll
-        // (fazemos num microtask para garantir que não haja transição)
-        Promise.resolve().then(() => {
-          htmlEl.style.scrollBehavior = prevScrollBehavior;
-        });
-      };
-    } else {
-      if (wasOpenRef.current && burgerLabelRef.current) {
-        burgerLabelRef.current.focus({ preventScroll: true });
-      }
-    }
-    wasOpenRef.current = menuOpen;
-  }, [menuOpen]);
 
   return (
     <main className="categorias">

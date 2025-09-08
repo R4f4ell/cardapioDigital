@@ -3,9 +3,16 @@ import anime from "animejs/lib/anime.es.js";
 import { Eye, X } from "lucide-react";
 import useCardapioModal from "../hooks/useCardapioModal";
 
+// Hooks
+import useImagePrefetch from "../hooks/useImagePrefetch";
+
+// Utils
+import { handleImgLoad, handleImgError } from "../utils/image";
+
 function CardapioGrid({ title, items }) {
   const { selected, openModal, closeModal } = useCardapioModal();
   const sectionRef = useRef(null);
+  const prefetch = useImagePrefetch();
 
   useEffect(() => {
     const root = sectionRef.current;
@@ -19,7 +26,6 @@ function CardapioGrid({ title, items }) {
     const cards = root.querySelectorAll(".categoria-card.sr-card");
     const sectionTitle = root.querySelector(".section-title");
 
-    // estado inicial (cards e título invisíveis)
     if (sectionTitle) {
       sectionTitle.style.opacity = "0";
       sectionTitle.style.transform = "scale(0.97)";
@@ -31,7 +37,6 @@ function CardapioGrid({ title, items }) {
       el.style.willChange = "transform, opacity";
     });
 
-    // Se o usuário tem redução de movimento, mostra direto sem animação
     if (reduce) {
       if (sectionTitle) {
         sectionTitle.style.opacity = "1";
@@ -44,7 +49,6 @@ function CardapioGrid({ title, items }) {
       return;
     }
 
-    // Observa quando o grid entra na tela para disparar a animação
     const grid = root.querySelector(".cards-grid");
     if (!grid) return;
 
@@ -54,7 +58,6 @@ function CardapioGrid({ title, items }) {
         if (!entry.isIntersecting) return;
 
         requestAnimationFrame(() => {
-          // Animação do título
           if (sectionTitle) {
             anime({
               targets: sectionTitle,
@@ -65,7 +68,6 @@ function CardapioGrid({ title, items }) {
               complete: () => (sectionTitle.style.willChange = "auto"),
             });
           }
-          // Animação dos cards
           anime({
             targets: cards,
             opacity: [0, 1],
@@ -88,24 +90,6 @@ function CardapioGrid({ title, items }) {
     return () => io.disconnect();
   }, []);
 
-  // Pré-carrega a imagem do modal quando o botão "Ver maior" ou o ícone é focado/hover
-  const handlePrefetchModal = (item) => {
-    const src = item.modalImg || item.img;
-    if (!src) return;
-    const img = new Image();
-    img.decoding = "async";
-    img.src = src;
-  };
-
-  // Se a imagem falhar, coloca um placeholder transparente para não quebrar layout
-  const onImgError = (e) => {
-    const transparentPx = "data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=";
-    if (e.currentTarget.src !== transparentPx) {
-      e.currentTarget.src = transparentPx;
-      e.currentTarget.classList.add("is-error");
-    }
-  };
-
   return (
     <section ref={sectionRef} className="cardapio-section">
       <h2 className="section-title">{title}</h2>
@@ -114,7 +98,6 @@ function CardapioGrid({ title, items }) {
         {items.map((item) => (
           <div key={item.id} className="card categoria-card sr-card">
             <div className="card-info">
-              {/* Imagem do card usando <picture> para mobile/tablet/desktop */}
               <div className="card-media">
                 <picture>
                   {item.imgDesktop && (
@@ -131,8 +114,8 @@ function CardapioGrid({ title, items }) {
                     height="675"
                     loading="lazy"
                     decoding="async"
-                    onLoad={(e) => e.currentTarget.classList.add("is-loaded")}
-                    onError={onImgError}
+                    onLoad={handleImgLoad}
+                    onError={handleImgError}
                   />
                 </picture>
               </div>
@@ -146,8 +129,8 @@ function CardapioGrid({ title, items }) {
                   className="card-preview card-preview--fluid"
                   aria-label={`Ver imagem ampliada de ${item.nome}`}
                   onClick={() => openModal(item)}
-                  onMouseEnter={() => handlePrefetchModal(item)}
-                  onFocus={() => handlePrefetchModal(item)}
+                  onMouseEnter={() => prefetch(item.modalImg || item.img)}
+                  onFocus={() => prefetch(item.modalImg || item.img)}
                 >
                   <Eye size={18} className="btn-icon" />
                   <span className="btn-text">Ver maior</span>
@@ -158,7 +141,6 @@ function CardapioGrid({ title, items }) {
         ))}
       </div>
 
-      {/* Modal para mostrar a imagem maior */}
       {selected && (
         <div className="modal" role="dialog" aria-modal="true" onClick={closeModal}>
           <div className="modal-content" onClick={(e) => e.stopPropagation()}>
@@ -181,7 +163,7 @@ function CardapioGrid({ title, items }) {
                 height="675"
                 loading="lazy"
                 decoding="async"
-                onError={onImgError}
+                onError={handleImgError}
               />
             </picture>
 
@@ -194,6 +176,4 @@ function CardapioGrid({ title, items }) {
     </section>
   );
 }
-
-// memo evita re-render desnecessário se props não mudarem
 export default memo(CardapioGrid);
