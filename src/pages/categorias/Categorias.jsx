@@ -4,12 +4,12 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import logo from "../../assets/images/inicio/logoFavicon.png";
 
 // Imports das categorias
-import Entradas from "../../components/entradas/Entradas";
-import Pratos from "../../components/pratos/Pratos";
-import Sobremesas from "../../components/sobremesas/Sobremesas";
-import Bebidas from "../../components/bebidas/Bebidas";
-import Combos from "../../components/combos/Combos";
-import Promocoes from "../../components/promocoes/Promocoes";
+import Entradas from "../../components/Entradas";
+import Pratos from "../../components/Pratos";
+import Sobremesas from "../../components/Sobremesas";
+import Bebidas from "../../components/Bebidas";
+import Combos from "../../components/Combos";
+import Promocoes from "../../components/Promocoes";
 
 import "./categorias.scss";
 

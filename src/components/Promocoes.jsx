@@ -1,4 +1,4 @@
-import CardapioGrid from "../CardapioGrid";
+import CardapioGrid from "./CardapioGrid";
 
 // Imagens dos cards
 import feijoadaCompletaMobile from "../../assets/images/promocoes/cards/feijoadaCompleta-mobile.webp";
