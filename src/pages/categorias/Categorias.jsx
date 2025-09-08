@@ -6,7 +6,7 @@ import "./categorias.scss";
 
 gsap.registerPlugin(ScrollTrigger);
 
-// Import das categorias com lazy loading
+// Lazy das categorias (inalterado)
 const Entradas   = lazy(() => import("../../components/Entradas"));
 const Pratos     = lazy(() => import("../../components/Pratos"));
 const Sobremesas = lazy(() => import("../../components/Sobremesas"));
@@ -36,12 +36,13 @@ export default function Categorias() {
 
   const selectCategory = useCallback((key) => {
     setActive(key);
+    // Só quando clica em um link queremos ir ao topo
     skipScrollRestoreRef.current = true;
     setMenuOpen(false);
     window.scrollTo({ top: 0, behavior: "smooth" });
   }, []);
 
-  // Prefetch: já carrega os módulos das categorias em segundo plano
+  // Prefetch em idle (inalterado)
   useEffect(() => {
     const preload = () => {
       import("../../components/Entradas");
@@ -59,7 +60,7 @@ export default function Categorias() {
     }
   }, []);
 
-  /* ==== Animações GSAP no header ==== */
+  /* ==== Animações GSAP no header (inalterado) ==== */
   useEffect(() => {
     if (headerRef.current) {
       gsap.fromTo(
@@ -80,7 +81,7 @@ export default function Categorias() {
 
       gsap.to(headerRef.current, {
         backdropFilter: "blur(10px)",
-        "-webkit-backdrop-filter": "blur(10px)", // suporte iOS/Safari
+        "-webkit-backdrop-filter": "blur(10px)",
         duration: 0.3,
         ease: "power1.out",
         scrollTrigger: {
@@ -93,7 +94,7 @@ export default function Categorias() {
     }
   }, []);
 
-  /* ==== Controle do menu hambúrguer ==== */
+  /* ==== Controle do menu hambúrguer (ajuste no UNLOCK) ==== */
   useEffect(() => {
     if (menuOpen) {
       const html = document.documentElement;
@@ -110,9 +111,9 @@ export default function Categorias() {
         bodyBg: body.style.backgroundColor,
       };
 
+      // Lock
       html.style.backgroundColor = "#0f1117";
       body.style.backgroundColor = "#0f1117";
-
       scrollYRef.current = window.scrollY;
       html.style.overflow = "hidden";
       body.style.overflow = "hidden";
@@ -134,21 +135,34 @@ export default function Categorias() {
       return () => {
         document.removeEventListener("keydown", onKeyDown);
 
+        // === UNLOCK sem "animação" de scroll ===
+        const htmlEl = document.documentElement;
+        const prevScrollBehavior = htmlEl.style.scrollBehavior;
+        // Desliga qualquer scroll suave global só neste momento
+        htmlEl.style.scrollBehavior = "auto";
+
         html.style.overflow = prev.htmlOverflow;
         body.style.overflow = prev.bodyOverflow;
         body.style.position = prev.bodyPosition;
         body.style.top = prev.bodyTop;
         body.style.width = prev.bodyWidth;
         body.style.touchAction = prev.bodyTouchAction;
-
         html.style.backgroundColor = prev.htmlBg;
         body.style.backgroundColor = prev.bodyBg;
 
         if (!skipScrollRestoreRef.current) {
+          // Restaura posição exata sem animação
           window.scrollTo(0, scrollYRef.current);
         } else {
+          // Foi clique em link (rolagem ao topo já foi chamada)
           skipScrollRestoreRef.current = false;
         }
+
+        // Restaura configuração anterior do comportamento de scroll
+        // (fazemos num microtask para garantir que não haja transição)
+        Promise.resolve().then(() => {
+          htmlEl.style.scrollBehavior = prevScrollBehavior;
+        });
       };
     } else {
       if (wasOpenRef.current && burgerLabelRef.current) {
