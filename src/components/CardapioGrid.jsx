@@ -1,8 +1,7 @@
 import { useEffect, useRef } from "react";
 import anime from "animejs/lib/anime.es.js";
 import { Eye, X } from "lucide-react";
-import useCardapioModal from "../hooks/useCardapioModal";
-import "./cardapioGrid.scss";
+import useCardapioModal from "../hooks/useCardapioModal"
 
 export default function CardapioGrid({ title, items }) {
   const { selected, openModal, closeModal } = useCardapioModal();

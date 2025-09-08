@@ -7,7 +7,8 @@
   display: block;
 }
 
-html, body {
+html,
+body {
   min-height: 100%;
   overflow-x: hidden;
   overscroll-behavior-y: none;
@@ -25,7 +26,6 @@ html, body {
   }
 }
 
-
 .section-title {
   font-size: 2.2rem;
   font-weight: 700;
@@ -38,9 +38,8 @@ html, body {
   -webkit-text-fill-color: transparent;
 
   text-shadow: 0 0 8px rgba(255, 215, 0, 0.5),
-               0 0 12px rgba(34, 139, 34, 0.4);
+    0 0 12px rgba(34, 139, 34, 0.4);
 }
-
 
 /* ===== Card global (NOVO visual: fundo dark + glows animados) ===== */
 .card {
@@ -54,8 +53,8 @@ html, body {
   color: #f5f7fa;
 
   box-shadow:
-    inset 0 1px 0 rgba(255,255,255,0.06),
-    0 6px 24px rgba(0,0,0,0.25);
+    inset 0 1px 0 rgba(255, 255, 255, 0.06),
+    0 6px 24px rgba(0, 0, 0, 0.25);
 
   transition: transform 500ms cubic-bezier(0.2, 0, 0, 1);
   will-change: transform;
@@ -77,22 +76,31 @@ html, body {
 
   /* Glow azul (sky-400) */
   &::before {
-    width: 48px; height: 48px;
-    right: 14px; top: 18%;
+    width: 48px;
+    height: 48px;
+    right: 14px;
+    top: 18%;
     background: #38bdf8;
     transform: translate(0, 0);
   }
 
   /* Glow laranja (orange-400) */
   &::after {
-    width: 44px; height: 44px;
-    right: 56px; bottom: 34%;
+    width: 44px;
+    height: 44px;
+    right: 56px;
+    bottom: 34%;
     background: #fb923c;
     transform: translate(0, 0);
   }
 
-  &:hover::before { transform: translate(11px, -11px); }
-  &:hover::after  { transform: translate(11px,  16px); }
+  &:hover::before {
+    transform: translate(11px, -11px);
+  }
+
+  &:hover::after {
+    transform: translate(11px, 16px);
+  }
 
   /* ===== Bloco interno ===== */
   .card-info {
@@ -100,7 +108,6 @@ html, body {
     color: #fff;
     width: 100%;
     min-height: var(--card-min-h, 240px);
-    padding: 1rem;
     border-radius: 0.7rem;
     display: flex;
     flex-direction: column;
@@ -124,15 +131,18 @@ html, body {
     font-size: 1rem;
     font-weight: 600;
     margin-top: 20px;
+    padding: 0 1rem;
   }
 
   .card-desc {
+    padding: 0 1rem 10px;
     font-size: 0.9rem;
     color: #d1d5db;
   }
 
   .card-footer {
     margin-top: auto;
+    padding: 0 1rem 20px;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -150,25 +160,32 @@ html, body {
   }
 
   .card-preview {
-    background: rgba(255,255,255,0.06);
-    border: 1px solid rgba(255,255,255,0.08);
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.08);
     color: #f5f7fa;
-    width: 36px; height: 36px;
+    width: 36px;
+    height: 36px;
     border-radius: 10px;
-    display: inline-flex; align-items: center; justify-content: center;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     transition: transform 200ms ease, background 200ms ease, border-color 200ms ease;
 
     &:hover {
       transform: translateY(-2px);
-      background: rgba(255,255,255,0.12);
-      border-color: rgba(255,255,255,0.18);
+      background: rgba(255, 255, 255, 0.12);
+      border-color: rgba(255, 255, 255, 0.18);
     }
-    &:active { transform: translateY(0); }
+
+    &:active {
+      transform: translateY(0);
+    }
   }
 }
 
 /* Acessibilidade: respeita quem prefere menos movimento */
 @media (prefers-reduced-motion: reduce) {
+
   .card,
   .card::before,
   .card::after {
@@ -192,6 +209,7 @@ html, body {
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 2.5rem;
   }
+
   @media (min-width: 1024px) {
     grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
     gap: 3rem;
@@ -217,7 +235,10 @@ html, body {
   opacity: 0;
   transition: opacity .25s ease;
 }
-.card-media .card-img.is-loaded { opacity: 1; }
+
+.card-media .card-img.is-loaded {
+  opacity: 1;
+}
 
 /* Botão de preview “fluido” reutilizável (icon-only no mobile, texto no ≥768px) */
 .card-preview--fluid {
@@ -225,7 +246,9 @@ html, body {
   height: 44px;
   padding: 0;
   border-radius: 10px;
-  display: inline-flex; align-items: center; justify-content: center;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   gap: .5rem;
 
   &:focus-visible {
@@ -233,16 +256,26 @@ html, body {
     outline-offset: 2px;
   }
 
-  .btn-icon { display: inline-flex; }
-  .btn-text { display: none; }
+  .btn-icon {
+    display: inline-flex;
+  }
+
+  .btn-text {
+    display: none;
+  }
 
   @media (min-width: 768px) {
     width: auto;
     height: 44px;
     padding: 0 .875rem;
 
-    .btn-icon { display: none; }
-    .btn-text { display: inline; }
+    .btn-icon {
+      display: none;
+    }
+
+    .btn-text {
+      display: inline;
+    }
   }
 }
 
@@ -254,6 +287,7 @@ html, body {
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
+
 .u-clamp-2 {
   display: -webkit-box;
   -webkit-line-clamp: 2;
@@ -262,14 +296,17 @@ html, body {
   overflow: hidden;
 }
 
-// Modal dos Cards
+/* ===================== */
+/* Modal dos Cards */
+/* ===================== */
+
 .cardapio-section {
   padding: 2rem 1rem;
 
   .modal {
     position: fixed;
     inset: 0;
-    background: rgba(0,0,0,.85);
+    background: rgba(0, 0, 0, .85);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -277,8 +314,8 @@ html, body {
     animation: fadeIn .25s ease;
 
     .modal-content {
-      width: min(92vw, 720px);
-      max-height: 85vh;
+      width: 85vw;
+      height: 70svh;
       border-radius: .8rem;
       position: relative;
       overflow: hidden;
@@ -293,7 +330,7 @@ html, body {
       position: absolute;
       top: .75rem;
       right: .75rem;
-      background: rgba(0,0,0,.6);
+      background: rgba(0, 0, 0, .6);
       border: none;
       color: #fff;
       cursor: pointer;
@@ -304,9 +341,14 @@ html, body {
       animation: fadeUp .3s ease forwards;
       animation-delay: .15s;
 
-      svg { display: block; }
+      svg {
+        display: block;
+      }
 
-      &:hover { transform: scale(1.1); }
+      &:hover {
+        transform: scale(1.1);
+      }
+
       &:focus-visible {
         outline: 2px solid #fff;
         outline-offset: 3px;
@@ -325,7 +367,7 @@ html, body {
       left: 0;
       width: 100%;
       padding: 1rem;
-      background: linear-gradient(to top, rgba(0,0,0,.7), transparent 80%);
+      background: linear-gradient(to top, rgba(0, 0, 0, .7), transparent 80%);
       display: flex;
       justify-content: center;
       align-items: flex-end;
@@ -343,21 +385,54 @@ html, body {
   }
 
   @keyframes fadeIn {
-    from { opacity: 0; }
-    to   { opacity: 1; }
+    from {
+      opacity: 0;
+    }
+
+    to {
+      opacity: 1;
+    }
   }
+
   @keyframes scaleIn {
-    from { transform: scale(.96); opacity: 0; }
-    to   { transform: scale(1);   opacity: 1; }
+    from {
+      transform: scale(.96);
+      opacity: 0;
+    }
+
+    to {
+      transform: scale(1);
+      opacity: 1;
+    }
   }
+
   @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(10px); }
-    to   { opacity: 1; transform: translateY(0); }
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .modal { animation: none !important; }
+    .modal {
+      animation: none !important;
+    }
+
     .modal-close,
-    .modal-overlay { animation: none !important; opacity: 1 !important; }
+    .modal-overlay {
+      animation: none !important;
+      opacity: 1 !important;
+    }
   }
+}
+
+// Bloquear scroll quando o modal estiver aberto
+body.modal-open {
+  overflow: hidden;
+  touch-action: none;
 }
