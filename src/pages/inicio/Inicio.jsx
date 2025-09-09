@@ -1,7 +1,10 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import logo from "../../assets/images/inicio/logoFavicon.png";
-import imgFundo from "../../assets/images/inicio/imgInicial-mobile.webp";
+import logo from "../../assets/images/inicio/logo/logoFavicon.png";
+import imgMobile from "../../assets/images/inicio/imgInicial/imgInicial-mobile.webp";
+import imgTablet from "../../assets/images/inicio/imgInicial/imgInicial-tablet.webp";
+import imgDesktop from "../../assets/images/inicio/imgInicial/imgInicial-desktop.webp";
+import imgFullhd from "../../assets/images/inicio/imgInicial/imgInicial-fullhd.webp"
 import anime from "animejs/lib/anime.es.js";
 import "./inicio.scss";
 
@@ -75,14 +78,29 @@ const Inicio = () => {
   return (
     <main className="inicio">
       <div className="inicio__background">
-        <img
-          src={imgFundo}
-          alt=""
-          className="inicio__bg-img"
-          loading="eager"
-          decoding="async"
-          fetchpriority="high"
-        />
+        {/* Imagem responsiva */}
+        <picture>
+          {/* Full HD (1920px ou mais) */}
+          <source srcSet={imgFullhd} media="(min-width: 1920px)" />
+
+          {/* Desktop padrão (1024px até 1919px) */}
+          <source srcSet={imgDesktop} media="(min-width: 1024px)" />
+
+          {/* Tablet (768px até 1023px) */}
+          <source srcSet={imgTablet} media="(min-width: 768px)" />
+
+          {/* Mobile (até 767px) */}
+          <img
+            src={imgMobile}
+            alt="Imagem de fundo inicial"
+            className="inicio__bg-img"
+            loading="eager"
+            decoding="async"
+            fetchpriority="high"
+          />
+        </picture>
+
+        {/* Onda SVG */}
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320" preserveAspectRatio="none">
           <defs>
             <linearGradient id="waveGrad" x1="0" x2="0" y1="0" y2="1">

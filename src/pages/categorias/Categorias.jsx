@@ -1,7 +1,7 @@
 import { useState, useCallback, useEffect, useRef, Suspense, lazy } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import logo from "../../assets/images/inicio/logoFavicon.png";
+import logo from "../../assets/images/inicio/logo/logoFavicon.png";
 import "./categorias.scss";
 
 // Hooks
